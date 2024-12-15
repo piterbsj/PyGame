@@ -1,5 +1,5 @@
 from pygame import *
 
-class Pony:
+class Pony:             #главный персонаж
     def __init__(self):
         pass
