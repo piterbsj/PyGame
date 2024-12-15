@@ -15,3 +15,4 @@ if __name__ == '__main__':
 
         screen.fill((216, 191, 216))
         pygame.display.flip()
+print('для коммита')
