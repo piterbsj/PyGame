@@ -1,7 +1,8 @@
 import pygame
 from pygame import*
+from datetime import datetime
 
-from models.Zone import Background, Time, Money, Points
+from models.zone import Background, Time, Money, Points
 from models.persons.mainpers import Pony
 
 if __name__ == '__main__':
@@ -16,10 +17,14 @@ if __name__ == '__main__':
     pony = Pony()
 
     running = True
+    begin = datetime.now()
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            now = datetime.now()
+            ch = now - begin
+            print(str(ch))
 
 
         screen.fill((216, 191, 216))
