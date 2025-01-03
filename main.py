@@ -4,6 +4,8 @@ from datetime import datetime
 
 from models.zone import Background, Time, Money, Points
 from models.persons.mainpers import Pony
+from models.methods import load_image
+
 
 if __name__ == '__main__':
     pygame.init()
@@ -14,7 +16,7 @@ if __name__ == '__main__':
     time_zone = Time()
     money_zone = Money()
     points_zone = Points()
-    pony = Pony()
+    pony = Pony('ponyy.png', (0,0))
 
     running = True
     isJumping = False
@@ -44,3 +46,4 @@ if __name__ == '__main__':
 
         pygame.display.flip()
         clock.tick(30)
+

@@ -1,10 +1,15 @@
+import os.path
+
 import pygame
+#from PyQt6.QtWidgets.QWidget import window
 from pygame import *
+from models.methods import load_image
 
 class Pony:             #главный персонаж
-    def __init__(self):
+    image = "image/ponyy.png"
+
+    def __init__(self, pic, possition):
         self.y = 400
-        self.image = pygame.image.load('image/ponyy.png')
         self.heig = 480
         self.velocity_y = 0
         self.gravity = 1
@@ -12,6 +17,16 @@ class Pony:             #главный персонаж
         self.is_jumping = False
         self.pony_hitbox = pygame.rect.Rect(200, 400, 80, 80)
         self.pony_color = pygame.color.Color((148, 0, 0))
+
+        self.x, self.y = possition    #добавление спрайта
+        self.all_sprites = pygame.sprite.Group()
+        sprite = pygame.sprite.Sprite()
+        sprite.image = pygame.image.load(f'image/{pic}')
+        sprite.rect = self.pony_hitbox
+        self.all_sprites = pygame.sprite.GroupSingle()
+        self.all_sprites.add(sprite)
+
+
 
     def jump(self):                             #прыжок
         if not self.is_jumping:
@@ -27,5 +42,7 @@ class Pony:             #главный персонаж
                 self.pony_hitbox.y = self.heig - self.pony_hitbox.height
                 self.is_jumping = False
 
-    def draw(self, screen: pygame.Surface):
-        pygame.draw.rect(screen, self.pony_color, self.pony_hitbox, width=2)
+    def draw(self, screen: pygame.Surface,  is_show_hitbox=True):
+        self.all_sprites.draw(screen)    #отрисовка спрайта
+        if is_show_hitbox:
+            pygame.draw.rect(screen, self.pony_color, self.pony_color, width=2)
