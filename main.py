@@ -12,7 +12,8 @@ if __name__ == '__main__':
     size = w, h = 1000, 600
     screen = pygame.display.set_mode(size)
 
-    background_zone = Background()
+    background_zone = Background('background.png',(0,0))
+    ground_zone = Background('ground.png',(0,0))
     time_zone = Time()
     money_zone = Money()
     points_zone = Points()

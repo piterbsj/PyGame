@@ -4,17 +4,25 @@ import pygame
 class Background:
     SPEED = 100
 
-    def __init__(self):
+    def __init__(self, pic, possition):
         self.x = 0
         self.background_zone_hitbox = pygame.rect.Rect(0, 0, 5000, 600)
-        self.background_zone_color = pygame.color.Color((216, 191, 216))
+        self.background_zone_color = pygame.color.Color((255, 191, 216))
 
-        self.ground_hitbox = pygame.rect.Rect(0, 480, 5000, 200)
+        self.ground_hitbox = pygame.rect.Rect(0, 480, 1920, 1080)
         self.ground_color = pygame.color.Color((156, 112, 62))
 
+        self.x, self.y = possition    #добавление спрайта
+        self.all_sprites = pygame.sprite.Group()
+        sprite = pygame.sprite.Sprite()
+        sprite.image = pygame.image.load(f'image/{pic}')
+        sprite.rect = self.background_zone_hitbox
+        self.all_sprites = pygame.sprite.GroupSingle()
+        self.all_sprites.add(sprite)
+
     def draw(self, screen: pygame.Surface):
-        pygame.draw.rect(screen, self.background_zone_color, self.background_zone_hitbox, width=0)
-        pygame.draw.rect(screen, self.ground_color, self.ground_hitbox, width=0)
+        self.all_sprites.draw(screen)
+   #отрисовка спрайта
 
     def move(self, tick: float):
         self.x -= (Background.SPEED * tick) / 1000
