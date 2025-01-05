@@ -6,7 +6,7 @@ class Background:
 
     def __init__(self, pic, possition):
         self.x = 0
-        self.background_zone_hitbox = pygame.rect.Rect(0, 0, 5000, 600)
+        self.background_zone_hitbox = pygame.rect.Rect(0, 0, 2500, 600)
         self.background_zone_color = pygame.color.Color((255, 191, 216))
 
         self.ground_hitbox = pygame.rect.Rect(0, 480, 1920, 1080)
@@ -16,6 +16,7 @@ class Background:
         self.all_sprites = pygame.sprite.Group()
         sprite = pygame.sprite.Sprite()
         sprite.image = pygame.image.load(f'image/{pic}')
+        sprite.image = pygame.transform.scale(sprite.image, (2500, 600))
         sprite.rect = self.background_zone_hitbox
         self.all_sprites = pygame.sprite.GroupSingle()
         self.all_sprites.add(sprite)
