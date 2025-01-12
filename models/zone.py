@@ -6,28 +6,40 @@ class Background:
 
     def __init__(self, pic, possition):
         self.x = 0
-        self.background_zone_hitbox = pygame.rect.Rect(0, 0, 2500, 600)
+        self.background_zone_hitbox = pygame.rect.Rect(0, 0, 5000, 465)
         self.background_zone_color = pygame.color.Color((255, 191, 216))
 
-        self.ground_hitbox = pygame.rect.Rect(0, 480, 1920, 1080)
-        self.ground_color = pygame.color.Color((156, 112, 62))
+        self.ground_hitbox = pygame.rect.Rect(0, 465, 5000, 135)
+        self.ground_color = pygame.color.Color((0, 0, 0))
 
-        self.x, self.y = possition    #добавление спрайта
-        self.all_sprites = pygame.sprite.Group()
-        sprite = pygame.sprite.Sprite()
-        sprite.image = pygame.image.load(f'image/{pic}')
-        sprite.image = pygame.transform.scale(sprite.image, (2500, 600))
-        sprite.rect = self.background_zone_hitbox
+        self.x, self.y = possition    #добавление спрайта задний фон
+        self.all_sprites_bc = pygame.sprite.Group()
+        sprite_bc = pygame.sprite.Sprite()
+        sprite_bc.image = pygame.image.load(f'image/{pic}')
+        sprite_bc.image = pygame.transform.scale(sprite_bc.image, (5000, 465))
+        sprite_bc.rect = self.background_zone_hitbox
         self.all_sprites = pygame.sprite.GroupSingle()
-        self.all_sprites.add(sprite)
+        self.all_sprites_bc.add(sprite_bc)
 
-    def draw(self, screen: pygame.Surface):
-        self.all_sprites.draw(screen)
-   #отрисовка спрайта
+        self.x, self.y = possition    #добавление спрайта трава
+        self.all_sprites_gr = pygame.sprite.Group()
+        sprite_gr = pygame.sprite.Sprite()
+        sprite_gr.image = pygame.image.load(f'image/{pic}')
+        sprite_gr.image = pygame.transform.scale(sprite_gr.image, (5000, 135))
+        sprite_gr.rect = self.ground_hitbox
+        self.all_sprites = pygame.sprite.GroupSingle()
+        self.all_sprites_gr.add(sprite_gr)
 
-    def move(self, tick: float):
-        self.x -= (Background.SPEED * tick) / 1000
+    def move(self, tick: 10):
+        self.x -= (Background.SPEED * 45) / 1000
         self.background_zone_hitbox.x = self.x
+
+    def draw_bc(self, screen: pygame.Surface):
+        self.all_sprites_bc.draw(screen)
+
+    def draw_gr(self, screen: pygame.Surface):
+        self.all_sprites_gr.draw(screen)
+
 
 class Points:
     def __init__(self):
@@ -56,7 +68,6 @@ class Time:
 
     def text(self, screen: pygame.Surface):
         screen.blit(self.cash_text, (10, 10))
-
 
     def draw(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.time_zone_color, self.time_zone_hitbox, width=2)

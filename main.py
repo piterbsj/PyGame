@@ -12,17 +12,19 @@ if __name__ == '__main__':
     size = w, h = 1000, 600
     screen = pygame.display.set_mode(size)
 
-    background_zone = Background('background.png',(0,0))
-    ground_zone = Background('ground.png',(0,0))
+    background_zone = Background('background1.jpg',(0,0))
+    ground = Background('ground.png',(0,0))
     time_zone = Time()
     money_zone = Money()
     points_zone = Points()
     pony = Pony('ponyy.png', (0,0))
+    move = Background('background1.jpg', (0,0))
 
     running = True
     isJumping = False
     clock = pygame.time.Clock()
     begin = datetime.now()
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -33,12 +35,14 @@ if __name__ == '__main__':
             now = datetime.now()
             ch = now - begin
 
+
         pony.update()
 
         screen.fill((0, 191, 216))
 
-
-        background_zone.draw(screen)
+        background_zone.draw_bc(screen)
+        ground.draw_gr(screen)
+        background_zone.move(screen)
         time_zone.draw(screen)
         money_zone.draw(screen)
         points_zone.draw(screen)
