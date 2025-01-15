@@ -12,7 +12,7 @@ class Background:
         self.ground_hitbox = pygame.rect.Rect(0, 465, 5000, 135)
         self.ground_color = pygame.color.Color((0, 0, 0))
 
-        self.x, self.y = possition    #добавление спрайта задний фон
+        self.x, self.y = possition #добавление спрайта задний фон
         self.all_sprites_bc = pygame.sprite.Group()
         sprite_bc = pygame.sprite.Sprite()
         sprite_bc.image = pygame.image.load(f'image/{pic}')
@@ -31,8 +31,11 @@ class Background:
         self.all_sprites_gr.add(sprite_gr)
 
     def move(self, tick: 10):
-        self.x -= (Background.SPEED * 45) / 1000
-        self.background_zone_hitbox.x = self.x
+        if self.x >= -3950:
+            self.x -= (Background.SPEED * 450) / 1000
+            self.background_zone_hitbox.x = self.x
+
+
 
     def draw_bc(self, screen: pygame.Surface):
         self.all_sprites_bc.draw(screen)
@@ -62,9 +65,9 @@ class Time:
         self.time_zone_hitbox = pygame.rect.Rect(800, 0, 200, 100)
         self.time_zone_color = pygame.color.Color((102, 255, 0))
 
-
         self.cash_font = pygame.font.Font(None, 30)
         self.cash_text = self.cash_font.render("10", True, (0, 0, 0))
+
 
     def text(self, screen: pygame.Surface):
         screen.blit(self.cash_text, (10, 10))

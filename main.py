@@ -23,7 +23,7 @@ if __name__ == '__main__':
     running = True
     isJumping = False
     clock = pygame.time.Clock()
-    begin = datetime.now()
+    timer = clock.tick()
 
     while running:
         for event in pygame.event.get():
@@ -32,8 +32,9 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and not isJumping:
                     pony.jump()
-            now = datetime.now()
-            ch = now - begin
+
+        timer += clock.tick()
+
 
 
         pony.update()
