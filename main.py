@@ -24,6 +24,7 @@ if __name__ == '__main__':
     isJumping = False
     clock = pygame.time.Clock()
     timer = clock.tick()
+    stopBack = False
 
     while running:
         for event in pygame.event.get():
@@ -32,18 +33,19 @@ if __name__ == '__main__':
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and not isJumping:
                     pony.jump()
+                if event.key == pygame.K_d:
+                    stopBack = not stopBack
 
         timer += clock.tick()
-
-
 
         pony.update()
 
         screen.fill((0, 191, 216))
 
         background_zone.draw_bc(screen)
+        if stopBack:
+            background_zone.move(screen)
         ground.draw_gr(screen)
-        background_zone.move(screen)
         time_zone.draw(screen)
         money_zone.draw(screen)
         points_zone.draw(screen)
