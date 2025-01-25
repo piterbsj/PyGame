@@ -2,7 +2,7 @@ import pygame
 
 
 class Background:
-    SPEED = 100
+    SPEED = 50
 
     def __init__(self, pic, possition):
         self.x = 0
@@ -16,7 +16,7 @@ class Background:
         self.all_sprites_bc = pygame.sprite.Group()
         sprite_bc = pygame.sprite.Sprite()
         sprite_bc.image = pygame.image.load(f'image/{pic}')
-        sprite_bc.image = pygame.transform.scale(sprite_bc.image, (5000, 465))
+        sprite_bc.image = pygame.transform.scale(sprite_bc.image, (5000, 600))
         sprite_bc.rect = self.background_zone_hitbox
         self.all_sprites = pygame.sprite.GroupSingle()
         self.all_sprites_bc.add(sprite_bc)

@@ -10,13 +10,13 @@ from models.methods import load_image
 
 
 def game(screen):
-    background_zone = Background('background1.jpg',(0,0))
-    ground = Background('ground.png',(0,0))
+    background_zone = Background('backgroundnew.jpg',(0,0))
+    ground = Background('ground.jpg',(0,0))
     time_zone = Time()
     money_zone = Money()
     points_zone = Points()
     pony = Pony('ponyy.png', (0,0))
-    move = Background('background1.jpg', (0,0))
+    move = Background('backgroundnew.jpg', (0,0))
 
     running = True
     isJumping = False
