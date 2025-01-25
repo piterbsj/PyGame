@@ -88,7 +88,7 @@ def startwindow(screen):
                 if 300 < x < 400 and 300 < y < 400:
                     return 2
                 if 450 < x < 600 and 300 < y < 400:
-                    pass
+                    return 3
                 if 650 < x < 800 and 300 < y < 400:
                     return 0
 
