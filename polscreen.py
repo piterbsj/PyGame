@@ -62,6 +62,27 @@ def startwindow(screen):
     changelevel = pygame.rect.Rect(450, 300, 100, 100)
     exit = pygame.rect.Rect(600, 300, 100, 100)
 
+    sprite_play = pygame.sprite.Sprite()
+    sprite_play.image = pygame.image.load('image/starticon.png')
+    sprite_play.image = pygame.transform.scale(sprite_play.image, (100, 100))
+    sprite_play.rect = startgame
+    all_sprites_play = pygame.sprite.GroupSingle()
+    all_sprites_play.add(sprite_play)
+
+    sprite_ch = pygame.sprite.Sprite()
+    sprite_ch.image = pygame.image.load('image/levelicon.png')
+    sprite_ch.image = pygame.transform.scale(sprite_ch.image, (100, 100))
+    sprite_ch.rect = changelevel
+    all_sprites_ch = pygame.sprite.GroupSingle()
+    all_sprites_ch.add(sprite_ch)
+
+    sprite_e = pygame.sprite.Sprite()
+    sprite_e.image = pygame.image.load('image/exiticon.png')
+    sprite_e.image = pygame.transform.scale(sprite_e.image, (100, 100))
+    sprite_e.rect = exit
+    all_sprites_e = pygame.sprite.GroupSingle()
+    all_sprites_e.add(sprite_e)
+
     font_size, font_pushs = 54, 25
     sp = [350, 410]
     font = pygame.font.Font(None, font_size)
@@ -101,9 +122,10 @@ def startwindow(screen):
         screen.blit(push_surface2, push_rect2)
         screen.blit(push_surface3, push_rect3)
 
-        pygame.draw.rect(screen, pygame.Color('white'), startgame)
-        pygame.draw.rect(screen, pygame.Color('black'), changelevel)
-        pygame.draw.rect(screen, pygame.Color('white'), exit)
+        all_sprites_play.draw(screen)
+        all_sprites_ch.draw(screen)
+        all_sprites_e.draw(screen)
+
         pygame.display.flip()
 
 def changelevelwindow(screen):
