@@ -33,6 +33,9 @@ class Pony:             #главный персонаж
             self.velocity_y = self.jump_strength
             self.is_jumping = True
 
+    def under(self):
+        pass
+
     def update(self):                           #обновление пощиции
         if self.is_jumping:
             self.pony_hitbox.y += self.velocity_y

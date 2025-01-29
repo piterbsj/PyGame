@@ -32,7 +32,7 @@ class Background:
 
     def move(self, tick: 10):
         if self.x >= -3950:
-            self.x -= (Background.SPEED * 450) / 1000
+            self.x -= (Background.SPEED * 150) / 1000
             self.background_zone_hitbox.x = self.x
 
 

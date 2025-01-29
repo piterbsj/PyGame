@@ -140,6 +140,27 @@ def changelevelwindow(screen):
     leveltwo = pygame.rect.Rect(280, 120, 150, 150)
     exitmenu = pygame.rect.Rect(10, 10, 70, 70)
 
+    sprite_levelone = pygame.sprite.Sprite()
+    sprite_levelone.image = pygame.image.load('image/level1.png')
+    sprite_levelone.image = pygame.transform.scale(sprite_levelone.image, (150, 150))
+    sprite_levelone.rect = levelone
+    all_sprites_levelone = pygame.sprite.GroupSingle()
+    all_sprites_levelone.add(sprite_levelone)
+
+    sprite_leveltwo = pygame.sprite.Sprite()
+    sprite_leveltwo.image = pygame.image.load('image/level2.png')
+    sprite_leveltwo.image = pygame.transform.scale(sprite_leveltwo.image, (150, 150))
+    sprite_leveltwo.rect = leveltwo
+    all_sprites_leveltwo = pygame.sprite.GroupSingle()
+    all_sprites_leveltwo.add(sprite_leveltwo)
+
+    sprite_exitmenu = pygame.sprite.Sprite()
+    sprite_exitmenu.image = pygame.image.load('image/exit2.png')
+    sprite_exitmenu.image = pygame.transform.scale(sprite_exitmenu.image, (70, 70))
+    sprite_exitmenu.rect = exitmenu
+    all_sprites_exitmenu = pygame.sprite.GroupSingle()
+    all_sprites_exitmenu.add(sprite_exitmenu)
+
     running = True
 
     while running:
@@ -155,9 +176,9 @@ def changelevelwindow(screen):
         screen.fill(pygame.Color(156, 110, 174))
         screen.blit(text_surface, text_rect)
 
-        pygame.draw.rect(screen, pygame.color.Color((156, 130, 174)), levelone)
-        pygame.draw.rect(screen, pygame.color.Color((156, 130, 174)), leveltwo)
-        pygame.draw.rect(screen, pygame.color.Color((156, 130, 174)), exitmenu)
+        all_sprites_levelone.draw(screen)
+        all_sprites_leveltwo.draw(screen)
+        all_sprites_exitmenu.draw(screen)
         pygame.display.flip()
 
 def stopwindow(screen):
