@@ -4,17 +4,19 @@ from datetime import datetime
 
 from pygame.examples.go_over_there import running
 
-from models.zone import Background, Time, Money, Points
+from models.zone import Background, Level, Money, Points
 from models.persons.mainpers import Pony
+from models.persons.villainpers import Snail
 from models.methods import load_image
 
 
 def game(screen):
     background_zone = Background('backgroundnew.jpg',(0,0))
     ground = Background('ground.jpg',(0,0))
-    time_zone = Time()
+    level_zone = Level('1')
     money_zone = Money()
     points_zone = Points()
+    zlo = Snail()
     pony = Pony('ponyy.png', (0,0))
     move = Background('backgroundnew.jpg', (0,0))
 
@@ -33,6 +35,8 @@ def game(screen):
                     pony.jump()
                 if event.key == pygame.K_d:
                     stopBack = not stopBack
+                if event.key == pygame.K_TAB:
+                    return 4
 
         timer += clock.tick()
 
@@ -44,12 +48,10 @@ def game(screen):
         if stopBack:
             background_zone.move(screen)
         ground.draw_gr(screen)
-        time_zone.draw(screen)
-        money_zone.draw(screen)
-        points_zone.draw(screen)
         pony.draw(screen)
-        time_zone.text(screen)
-
+        level_zone.text(screen)
+        zlo.draw(screen)
+        zlo.move(screen)
         pygame.display.flip()
         clock.tick(30)
 

@@ -60,17 +60,17 @@ class Money:
     def draw(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.money_zone_color, self.money_zone_hitbox, width=2)
 
-class Time:
-    def __init__(self):
-        self.time_zone_hitbox = pygame.rect.Rect(800, 0, 200, 100)
-        self.time_zone_color = pygame.color.Color((102, 255, 0))
+class Level:
+    def __init__(self, number):
+        self.level_zone_hitbox = pygame.rect.Rect(800, 0, 200, 100)
+        self.level_zone_color = pygame.color.Color((102, 255, 0))
 
-        self.cash_font = pygame.font.Font(None, 30)
-        self.cash_text = self.cash_font.render("10", True, (0, 0, 0))
+        self.cash_font = pygame.font.Font(None, 40)
+        self.cash_text = self.cash_font.render(f'Level {number}', True, (0, 0, 0))
 
 
     def text(self, screen: pygame.Surface):
         screen.blit(self.cash_text, (10, 10))
 
     def draw(self, screen: pygame.Surface):
-        pygame.draw.rect(screen, self.time_zone_color, self.time_zone_hitbox, width=2)
+        pygame.draw.rect(screen, self.level_zone_color, self.level_zone_hitbox, width=2)
