@@ -8,6 +8,7 @@ from models.zone import Background, Level, Money, Points
 from models.persons.mainpers import Pony
 from models.persons.villainpers import Snail
 from models.methods import load_image
+from models.interface import Obstacles
 
 
 def game(screen):
@@ -16,6 +17,13 @@ def game(screen):
     level_zone = Level('1')
     money_zone = Money()
     points_zone = Points()
+    box1 = Obstacles()
+    box2 = Obstacles()
+    box3 = Obstacles()
+    box4 = Obstacles()
+    box5 = Obstacles()
+    box6 = Obstacles()
+
     zlo = Snail()
     pony = Pony('ponyy.png', (0,0))
     move = Background('backgroundnew.jpg', (0,0))
@@ -45,8 +53,20 @@ def game(screen):
         screen.fill((0, 191, 216))
 
         background_zone.draw_bc(screen)
+        box1.draw1(screen)
+        box2.draw2(screen)
+        box3.draw3(screen)
+        box4.draw4(screen)
+        box5.draw5(screen)
+        box6.draw6(screen)
         if stopBack:
             background_zone.move(screen)
+            box1.move1(screen)
+            box2.move2(screen)
+            box3.move3(screen)
+            box4.move4(screen)
+            box5.move5(screen)
+            box6.move6(screen)
         ground.draw_gr(screen)
         pony.draw(screen)
         level_zone.text(screen)
