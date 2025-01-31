@@ -19,7 +19,7 @@ class Obstacles:                #препятствия
         for obst in self.coord:
             box_hitbox = pygame.rect.Rect(obst[0], obst[1], obst[2], obst[3])
             box_color = pygame.color.Color((253, 233, 16))
-            self.newcoord.append([box_hitbox, box_color])
+            self.newcoord.append([box_hitbox, box_color, box_hitbox.x])
 
     def draw(self, screen: pygame.Surface):
         for obst in self.newcoord:
@@ -27,6 +27,5 @@ class Obstacles:                #препятствия
 
     def moveall(self, tick: 10):
         for i in self.newcoord:
-            coord = i[0].x
-            coord -= (Obstacles.SPEED * 150) / 1000
-            i[0].x = coord
+            i[2] -= (Obstacles.SPEED * 150) / 1000
+            i[0].x = i[2]
