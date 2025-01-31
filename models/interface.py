@@ -25,7 +25,12 @@ class Obstacles:                #препятствия
         for obst in self.newcoord:
             pygame.draw.rect(screen, obst[1], obst[0], width=0)
 
-    def moveall(self, tick: 10):
-        for i in self.newcoord:
-            i[2] -= (Obstacles.SPEED * 150) / 1000
-            i[0].x = i[2]
+    def moveall(self, keys):
+        if keys[pygame.K_RIGHT]:
+            for i in self.newcoord:
+                i[2] -= (Obstacles.SPEED * 150) / 1000
+                i[0].x = i[2]
+        if keys[pygame.K_LEFT]:
+            for i in self.newcoord:
+                i[2] += (Obstacles.SPEED * 150) / 1000
+                i[0].x = i[2]

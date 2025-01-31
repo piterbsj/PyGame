@@ -30,11 +30,14 @@ class Background:
         self.all_sprites = pygame.sprite.GroupSingle()
         self.all_sprites_gr.add(sprite_gr)
 
-    def move(self, tick: 10):
+    def move(self, keys):
         if self.x >= -3950:
-            self.x -= (Background.SPEED * 150) / 1000
-            self.background_zone_hitbox.x = self.x
-
+            if keys[pygame.K_RIGHT]:
+                self.x -= (Background.SPEED * 150) / 1000
+                self.background_zone_hitbox.x = self.x
+            if keys[pygame.K_LEFT]:
+                self.x += (Background.SPEED * 150) / 1000
+                self.background_zone_hitbox.x = self.x
 
 
     def draw_bc(self, screen: pygame.Surface):

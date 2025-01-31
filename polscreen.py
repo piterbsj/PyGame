@@ -40,19 +40,24 @@ def game(screen):
                 if event.key == pygame.K_TAB:
                     return 4
 
+        #keys = pygame.key.get_pressed()
+        #background_zone.draw_bc(screen)
+        #background_zone.move(keys)
+
         timer += clock.tick()
 
         pony.update()
 
         screen.fill((0, 191, 216))
 
+        keys = pygame.key.get_pressed()
         background_zone.draw_bc(screen)
+        background_zone.move(keys)
+        boxes.moveall(keys)
+
         boxes.draw(screen)
         zlo.draw(screen)
-        if stopBack:
-            background_zone.move(screen)
-            boxes.moveall(screen)
-            zlo.move(screen)
+        zlo.move(screen)
         ground.draw_gr(screen)
         pony.draw(screen)
         level_zone.text(screen)
