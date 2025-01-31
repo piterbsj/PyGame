@@ -4,7 +4,11 @@ class Obstacles:                #препятствия
     SPEED = 50
 
 
-    def __init__(self):
+    def __init__(self, n=1):
+        self.readtxt(n)
+        self.newcoord = []
+        self.newrect()
+
         self.box1_hitbox = pygame.rect.Rect(500, 200, 50, 50)
         self.x1 = self.box1_hitbox.x
         self.box1_color = pygame.color.Color((253, 233, 16))
@@ -70,3 +74,20 @@ class Obstacles:                #препятствия
     def move6(self, tick: 10):
         self.x6 -= (Obstacles.SPEED * 150) / 1000
         self.box6_hitbox.x = self.x6
+
+    def readtxt(self, n):
+        if n == 1:
+            with open('level/level_1.txt') as file:
+                self.coord = [list(map(int, i.split(','))) for i in file]
+        elif n == 2:
+            pass
+
+    def newrect(self):
+        for obst in self.coord:
+            box_hitbox = pygame.rect.Rect(obst[0], obst[1], obst[2], obst[3])
+            box_color = pygame.color.Color((253, 233, 16))
+            self.newcoord.append((box_hitbox, box_color))
+
+    def drawhz(self, screen: pygame.Surface):
+        for obst in self.newcoord:
+            pygame.draw.rect(screen, obst[1], obst[0], width=0)
