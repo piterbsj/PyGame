@@ -21,5 +21,5 @@ class Snail:                   #улитки
 
     def move(self, tick: 10):
         for info in self.spawn:
-            info[2] -= (Snail.SPEED * 180) / 1000
+            info[2] -= (Snail.SPEED * 160) / 1000
             info[1].x = info[2]

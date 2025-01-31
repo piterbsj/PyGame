@@ -11,13 +11,13 @@ from models.methods import load_image
 from models.interface import Obstacles
 
 
-def game(screen):
+def game(screen, numlevel):
     background_zone = Background('backgroundnew.jpg',(0,0))
     ground = Background('ground.jpg',(0,0))
-    level_zone = Level('1')
+    level_zone = Level(str(numlevel))
     money_zone = Money()
     points_zone = Points()
-    boxes = Obstacles()
+    boxes = Obstacles(numlevel)
     zlo = Snail()
     pony = Pony('ponyy.png', (0,0))
     move = Background('backgroundnew.jpg', (0,0))
@@ -40,10 +40,6 @@ def game(screen):
                 if event.key == pygame.K_TAB:
                     return 4
 
-        #keys = pygame.key.get_pressed()
-        #background_zone.draw_bc(screen)
-        #background_zone.move(keys)
-
         timer += clock.tick()
 
         pony.update()
@@ -64,7 +60,7 @@ def game(screen):
         pygame.display.flip()
         clock.tick(30)
 
-def startwindow(screen):
+def startwindow(screen, numlevel=1):
     clock = pygame.time.Clock()
     listoftext = ['Play', 'Change level', 'Exit']
     backgroundphoto = pygame.rect.Rect(350, 130, 300, 60)
@@ -139,7 +135,7 @@ def startwindow(screen):
 
         pygame.display.flip()
 
-def changelevelwindow(screen):
+def changelevelwindow(screen, numlevel=1):
     clock = pygame.time.Clock()
 
     font_size = 54
@@ -182,6 +178,8 @@ def changelevelwindow(screen):
                 x, y = event.pos
                 if 10 < x < 80 and 10 < y < 80:
                     return 1
+                if 100 < x < 250 and 120 < y < 270:
+                    return 2
 
         tick = clock.tick()
         screen.fill(pygame.Color(156, 110, 174))
@@ -192,10 +190,13 @@ def changelevelwindow(screen):
         all_sprites_exitmenu.draw(screen)
         pygame.display.flip()
 
-def stopwindow(screen):
+def stopwindow(screen, numlevel=1):
     running = True
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 0
+
+def win(screen, numlevel=1):
+    pass

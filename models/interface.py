@@ -13,7 +13,8 @@ class Obstacles:                #препятствия
             with open('level/level_1.txt') as file:
                 self.coord = [list(map(int, i.split(','))) for i in file]
         elif n == 2:
-            pass
+            with open('level/level_2.txt') as file:
+                self.coord = [list(map(int, i.split(','))) for i in file]
 
     def newrect(self):
         for obst in self.coord:
