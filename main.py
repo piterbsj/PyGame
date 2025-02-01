@@ -13,4 +13,4 @@ if __name__ == '__main__':
     screen_id = 1
 
     while screen_id:
-        screen_id = screen_dict[screen_id](screen, 2)
+        screen_id = screen_dict[screen_id](screen)

@@ -2,7 +2,6 @@ import pygame
 from pygame import*
 from datetime import datetime
 
-from pygame.examples.go_over_there import running
 
 from models.zone import Background, Level, Money, Points
 from models.persons.mainpers import Pony
@@ -10,15 +9,16 @@ from models.persons.villainpers import Snail
 from models.methods import load_image
 from models.interface import Obstacles
 
+LEVEL = 1
 
-def game(screen, numlevel):
+def game(screen):
     background_zone = Background('backgroundnew.jpg',(0,0))
     ground = Background('ground.jpg',(0,0))
-    level_zone = Level(str(numlevel))
+    level_zone = Level(str(LEVEL))
     money_zone = Money()
     points_zone = Points()
-    boxes = Obstacles(numlevel)
-    zlo = Snail()
+    boxes = Obstacles(LEVEL)
+    zlo = Snail(LEVEL)
     pony = Pony('ponyy.png', (0,0))
     move = Background('backgroundnew.jpg', (0,0))
 
@@ -136,8 +136,9 @@ def startwindow(screen, numlevel=1):
         pygame.display.flip()
 
 def changelevelwindow(screen, numlevel=1):
-    clock = pygame.time.Clock()
+    global LEVEL
 
+    clock = pygame.time.Clock()
     font_size = 54
     font = pygame.font.Font(None, font_size)
     text_surface = font.render('Which level will you choose?', True, pygame.Color('black'))
@@ -179,6 +180,10 @@ def changelevelwindow(screen, numlevel=1):
                 if 10 < x < 80 and 10 < y < 80:
                     return 1
                 if 100 < x < 250 and 120 < y < 270:
+                    LEVEL = 1
+                    return 2
+                if 300 < x < 450 and 120 < y < 270:
+                    LEVEL = 2
                     return 2
 
         tick = clock.tick()
