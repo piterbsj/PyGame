@@ -39,6 +39,12 @@ def game(screen):
                     stopBack = not stopBack
                 if event.key == pygame.K_TAB:
                     return 4
+        for im in boxes.newcoord:
+            if pony.pony_hitbox.colliderect(im[1]):
+                if pony.velocity_y > 0:  # Проверка, движется ли игрок вниз
+                    pony.pony_hitbox.bottom = im[1].top
+                    pony.velocity_y = 0
+
         for  i in zlo.spawn:
             flag = sprite.groupcollide(pony.all_sprites, i[0], True, False)
             if not flag == {}:

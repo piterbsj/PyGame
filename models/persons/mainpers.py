@@ -4,6 +4,9 @@ import pygame
 #from PyQt6.QtWidgets.QWidget import window
 from pygame import *
 from models.methods import load_image
+from models.interface import Obstacles
+
+obs = Obstacles()
 
 class Pony:             #главный персонаж
     image = "image/ponyy.png"
@@ -34,6 +37,7 @@ class Pony:             #главный персонаж
         if not self.is_jumping:
             self.velocity_y = self.jump_strength
             self.is_jumping = True
+
 
     def under(self):
         pass

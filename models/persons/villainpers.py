@@ -21,7 +21,7 @@ class Snail:                   #улитки
             self.all_sprites_evil = pygame.sprite.Group()
             sprite_evil = pygame.sprite.Sprite()
             sprite_evil.image = pygame.image.load('image/devil.png')
-            sprite_evil.image = pygame.transform.scale(sprite_evil.image, (65, 65))
+            sprite_evil.image = pygame.transform.scale(sprite_evil.image, (70, 70))
             self.mask = pygame.mask.from_surface(sprite_evil.image)
             sprite_evil.rect = self.zlo_hitbox
             self.all_sprites_evil = pygame.sprite.GroupSingle()
