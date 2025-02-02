@@ -12,15 +12,15 @@ from models.interface import Obstacles
 LEVEL = 1
 
 def game(screen):
-    background_zone = Background('backgroundnew.jpg',(0,0))
-    ground = Background('ground.jpg',(0,0))
+    background_zone = Background('backgroundnew.jpg',(0, 0))
+    ground = Background('ground.jpg',(0, 0))
     level_zone = Level(str(LEVEL))
     money_zone = Money()
     points_zone = Points()
     boxes = Obstacles(LEVEL)
     zlo = Snail(LEVEL)
-    pony = Pony('ponyy.png', (0,0))
-    move = Background('backgroundnew.jpg', (0,0))
+    pony = Pony('ponyy.png', (0, 0))
+    move = Background('backgroundnew.jpg', (0, 0))
 
     running = True
     isJumping = False
