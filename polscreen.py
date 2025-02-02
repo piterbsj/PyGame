@@ -39,10 +39,16 @@ def game(screen):
                     stopBack = not stopBack
                 if event.key == pygame.K_TAB:
                     return 4
+        for  i in zlo.spawn:
+            flag = sprite.groupcollide(pony.all_sprites, i[0], True, False)
+            if not flag == {}:
+                print('убило')
+
 
         timer += clock.tick()
 
         pony.update()
+        #zlo.update1()
 
         screen.fill((0, 191, 216))
 
@@ -106,6 +112,7 @@ def startwindow(screen, numlevel=1):
     push_rect3 = push_surface3.get_rect(center=(sp[0] + 300, sp[1]))
 
     running = True
+
     while running:
         # Просматриваем все события
         for event in pygame.event.get():

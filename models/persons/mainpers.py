@@ -22,6 +22,8 @@ class Pony:             #главный персонаж
         self.all_sprites = pygame.sprite.Group()
         sprite = pygame.sprite.Sprite()
         sprite.image = pygame.image.load(f'image/{pic}')
+        sprite.image = pygame.transform.scale(sprite.image, (80, 80))
+        self.mask = pygame.mask.from_surface(sprite.image)
         sprite.rect = self.pony_hitbox
         self.all_sprites = pygame.sprite.GroupSingle()
         self.all_sprites.add(sprite)
@@ -50,7 +52,6 @@ class Pony:             #главный персонаж
 
 
 
-    def draw(self, screen: pygame.Surface,  is_show_hitbox=True):
-        self.all_sprites.draw(screen)    #отрисовка спрайта
+    def draw(self, screen: pygame.Surface,  is_show_hitbox=True):   #отрисовка спрайта
         if is_show_hitbox:
-            pygame.draw.rect(screen, self.pony_color, self.pony_color, width=2)
+            self.all_sprites.draw(screen)
