@@ -10,8 +10,11 @@ from models.methods import load_image
 from models.interface import Obstacles
 
 LEVEL = 1
+LOSE = False
 
 def game(screen):
+    global LOSE
+
     background_zone = Background('backgroundnew.jpg',(0, 0))
     ground = Background('ground.jpg',(0, 0))
     level_zone = Level(str(LEVEL))
@@ -26,19 +29,22 @@ def game(screen):
     isJumping = False
     clock = pygame.time.Clock()
     timer = clock.tick()
-    stopBack = False
-
     while running:
+        if LOSE:
+            return 5
+        elif background_zone.win:
+            background_zone.win = False
+            return 5
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and not isJumping:
                     pony.jump()
-                if event.key == pygame.K_d:
-                    stopBack = not stopBack
                 if event.key == pygame.K_TAB:
                     return 4
+
         for im in boxes.newcoord:
             if pony.pony_hitbox.colliderect(im[1]):
                 if pony.velocity_y > 0:  # Проверка, движется ли игрок вниз
@@ -48,8 +54,8 @@ def game(screen):
         for  i in zlo.spawn:
             flag = sprite.groupcollide(pony.all_sprites, i[0], True, False)
             if not flag == {}:
+                LOSE = True
                 print('убило')
-
 
         timer += clock.tick()
 
@@ -216,5 +222,39 @@ def stopwindow(screen, numlevel=1):
             if event.type == pygame.QUIT:
                 return 0
 
-def win(screen, numlevel=1):
-    pass
+def winorloss(screen):
+    global LOSE
+    winorloss = {'w': "You've won! The next level?",
+                 'l': "You've lost! Anew?"}
+
+    if LOSE:
+        LOSE = False
+        result = 'l'
+    else:
+        result = 'w'
+
+    font_size = 60
+    font = pygame.font.Font(None, font_size)
+    text_surface = font.render(winorloss[result], True, pygame.Color('black'))
+    text_rect = text_surface.get_rect(center=(500, 200))
+
+    reset = pygame.rect.Rect(320, 250, 150, 150)
+    changelevel = pygame.rect.Rect(520, 250, 150, 150)
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return 0
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = event.pos
+                if 320 < x < 470 and 250 < y < 400:
+                    return 2
+                if 520 < x < 770 and 250 < y < 400:
+                    return 3
+
+        screen.fill(pygame.Color(156, 110, 174))
+        screen.blit(text_surface, text_rect)
+        pygame.draw.rect(screen, pygame.color.Color((156, 130, 174)), reset)
+        pygame.draw.rect(screen, pygame.color.Color((156, 130, 174)), changelevel)
+        pygame.display.flip()

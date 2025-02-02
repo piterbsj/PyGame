@@ -9,6 +9,8 @@ class Background:
         self.background_zone_hitbox = pygame.rect.Rect(0, 0, 5000, 465)
         self.background_zone_color = pygame.color.Color((255, 191, 216))
 
+        self.win = False
+
         self.ground_hitbox = pygame.rect.Rect(0, 465, 5000, 135)
         self.ground_color = pygame.color.Color((0, 0, 0))
 
@@ -38,7 +40,8 @@ class Background:
             if keys[pygame.K_LEFT]:
                 self.x += (Background.SPEED * 150) / 1000
                 self.background_zone_hitbox.x = self.x
-
+        else:
+            self.win = True
 
     def draw_bc(self, screen: pygame.Surface):
         self.all_sprites_bc.draw(screen)
