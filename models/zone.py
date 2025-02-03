@@ -52,18 +52,19 @@ class Background:
 
 class Points:
     def __init__(self):
-        self.points = 1
-        self.points_zone_hitbox = pygame.rect.Rect(450, 0, 150, 100)
+        self.points = 0
+        # self.points_zone_hitbox = pygame.rect.Rect(750, 0, 150, 100)
         self.cash_font = pygame.font.Font(None, 40)
         self.cash_text = self.cash_font.render(f'{self.points}', True, (0, 0, 0))
 
 
     def text(self, screen: pygame.Surface):
-        screen.blit(self.cash_text, (750, 10))
+        screen.blit(self.cash_text, (920, 10))
 
-    def update(self, screen: pygame.Surface):
-        self.points *= 4
-        self.cash_text = self.cash_font.render(f'{self.points}', True, (0, 0, 0))
+    def update(self,  screen: pygame.Surface, keys):
+        if keys[pygame.K_RIGHT] or keys[pygame.K_LEFT]:
+            self.points += 4
+            self.cash_text = self.cash_font.render(f'{self.points}', True, (0, 0, 0))
 
 
 class Money:

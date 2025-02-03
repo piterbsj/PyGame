@@ -10,11 +10,13 @@ from models.interface import Obstacles
 
 LEVEL = 1
 LOSE = False
+POINTS = 0
 
 pygame.init()
 
 def game(screen):
     global LOSE
+    global POINTS
 
     background_zone = Background('backgroundnew.jpg',(0, 0))
     ground = Background('ground.jpg',(0, 0))
@@ -80,7 +82,8 @@ def game(screen):
         background_zone.draw_bc(screen)
         boxes.moveall(keys)
         points_zone.text(screen)
-        points_zone.update(screen)
+        points_zone.update(screen, keys)
+        POINTS = points_zone.points
         boxes.draw(screen)
         zlo.draw(screen)
         zlo.move(screen)
@@ -194,16 +197,15 @@ def winorloss(screen):
     global LOSE
     winorloss = {'w': "You've won! The next level?",
                  'l': "You've lost! Anew?"}
-
     if LOSE:
         LOSE = False
         result = 'l'
     else:
         result = 'w'
 
-    listoftext = [winorloss[result], 'Retry', 'Change level']
-    sizes_text = [60, 25, 25]
-    coord_text = [(500, 200), (390, 400), (600, 400)]
+    listoftext = [winorloss[result], 'Retry', 'Change level', 'Score:', str(POINTS)]
+    sizes_text = [60, 25, 25, 40, 40]
+    coord_text = [(500, 200), (390, 400), (600, 400), (50, 20), (50, 50)]
 
     texts = textforwindow(listoftext, sizes_text, coord_text)
 
