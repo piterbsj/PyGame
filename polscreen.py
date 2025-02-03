@@ -78,11 +78,18 @@ def game(screen):
         pygame.display.flip()
         clock.tick(30)
 
-def startwindow(screen, numlevel=1):
+def startwindow(screen):
     clock = pygame.time.Clock()
-    listoftext = ['Play', 'Change level', 'Exit']
+
+    listoftext = ["Let's play!", 'Play', 'Change level', 'Exit']
+    sizes_text = [54, 25, 25, 25]
+    coord_text = [(500, 150), (350, 410), (500, 410), (650, 410)]
+
+    listsurfacetext = textforwindow(listoftext, sizes_text, coord_text)
+
     backgroundphoto = pygame.rect.Rect(350, 130, 300, 60)
     backgroundphoto_color = pygame.color.Color((156, 130, 174))
+
     startgame = pygame.rect.Rect(300, 300, 100, 100)
     changelevel = pygame.rect.Rect(450, 300, 100, 100)
     exit = pygame.rect.Rect(600, 300, 100, 100)
@@ -92,21 +99,6 @@ def startwindow(screen, numlevel=1):
     sizes = [(100, 100), (100, 100), (100, 100)]
 
     all_sprites_group = allsprites(pics, rects, sizes)
-
-    font_size, font_pushs = 54, 25
-    sp = [350, 410]
-    font = pygame.font.Font(None, font_size)
-    font_push = pygame.font.Font(None, font_pushs)
-
-    text_surface = font.render("Let's play!", True, pygame.Color('black'))
-    text_rect = text_surface.get_rect(center=(500, 150))
-
-    push_surface1 = font_push.render(listoftext[0], True, pygame.Color('black'))
-    push_rect1 = push_surface1.get_rect(center=(sp[0], sp[1]))
-    push_surface2 = font_push.render(listoftext[1], True, pygame.Color('black'))
-    push_rect2 = push_surface2.get_rect(center=(sp[0] + 150, sp[1]))
-    push_surface3 = font_push.render(listoftext[2], True, pygame.Color('black'))
-    push_rect3 = push_surface3.get_rect(center=(sp[0] + 300, sp[1]))
 
     running = True
 
@@ -128,16 +120,14 @@ def startwindow(screen, numlevel=1):
         screen.fill(pygame.Color(156, 110, 174))
         count = 0
         pygame.draw.rect(screen, backgroundphoto_color, backgroundphoto)
-        screen.blit(text_surface, text_rect)
-        screen.blit(push_surface1, push_rect1)
-        screen.blit(push_surface2, push_rect2)
-        screen.blit(push_surface3, push_rect3)
 
+        for i in listsurfacetext:
+            screen.blit(i[0], i[1])
         all_sprites_group.draw(screen)
 
         pygame.display.flip()
 
-def changelevelwindow(screen, numlevel=1):
+def changelevelwindow(screen):
     global LEVEL
 
     clock = pygame.time.Clock()
@@ -177,14 +167,10 @@ def changelevelwindow(screen, numlevel=1):
         screen.fill(pygame.Color(156, 110, 174))
         screen.blit(text_surface, text_rect)
 
-        # all_sprites_levelone.draw(screen)
-        # all_sprites_leveltwo.draw(screen)
-        # all_sprites_exitmenu.draw(screen)
-
         all_sprites_group.draw(screen)
         pygame.display.flip()
 
-def stopwindow(screen, numlevel=1):
+def stopwindow(screen):
     running = True
 
     while running:
@@ -203,10 +189,11 @@ def winorloss(screen):
     else:
         result = 'w'
 
-    font_size = 60
-    font = pygame.font.Font(None, font_size)
-    text_surface = font.render(winorloss[result], True, pygame.Color('black'))
-    text_rect = text_surface.get_rect(center=(500, 200))
+    listoftext = [winorloss[result], 'Retry', 'Change level']
+    sizes_text = [60, 25, 25]
+    coord_text = [(500, 200), (390, 400), (600, 400)]
+
+    texts = textforwindow(listoftext, sizes_text, coord_text)
 
     reset = pygame.rect.Rect(320, 250, 150, 150)
     changelevel = pygame.rect.Rect(520, 250, 150, 150)
@@ -230,7 +217,8 @@ def winorloss(screen):
                     return 3
 
         screen.fill(pygame.Color(156, 110, 174))
-        screen.blit(text_surface, text_rect)
+        for i in texts:
+            screen.blit(i[0], i[1])
         group_all_sprites.draw(screen)
         pygame.display.flip()
 
@@ -244,3 +232,12 @@ def allsprites(pics, rects, sizes):                #создание групп 
         sprite1.rect = rects[pic]
         all_sprites_group.add(sprite1)
     return all_sprites_group
+
+def textforwindow(text, size, coord):
+    texts = []
+    for i in range(len(text)):
+        font = pygame.font.Font(None, size[i])
+        text_surface = font.render(text[i], True, pygame.Color('black'))
+        text_rect = text_surface.get_rect(center=coord[i])
+        texts.append([text_surface, text_rect])
+    return texts
