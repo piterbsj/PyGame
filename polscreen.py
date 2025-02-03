@@ -1,6 +1,5 @@
 import pygame
 from pygame import*
-from datetime import datetime
 
 
 from models.zone import Background, Level, Money, Points
@@ -80,7 +79,8 @@ def game(screen):
         background_zone.move(keys)
         background_zone.draw_bc(screen)
         boxes.moveall(keys)
-
+        points_zone.text(screen)
+        points_zone.update(screen)
         boxes.draw(screen)
         zlo.draw(screen)
         zlo.move(screen)

@@ -69,6 +69,7 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
 
 
 
+
     def draw(self, screen: pygame.Surface,  is_show_hitbox=True):   #отрисовка спрайта
         if is_show_hitbox:
             self.all_sprites.draw(screen)

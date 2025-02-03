@@ -52,11 +52,19 @@ class Background:
 
 class Points:
     def __init__(self):
-        self.points_zone_hitbox = pygame.rect.Rect(0, 0, 150, 100)
-        self.points_zone_color = pygame.color.Color((179, 40, 33))
+        self.points = 1
+        self.points_zone_hitbox = pygame.rect.Rect(450, 0, 150, 100)
+        self.cash_font = pygame.font.Font(None, 40)
+        self.cash_text = self.cash_font.render(f'{self.points}', True, (0, 0, 0))
 
-    def draw(self, screen: pygame.Surface):
-        pygame.draw.rect(screen, self.points_zone_color, self.points_zone_hitbox, width=2)
+
+    def text(self, screen: pygame.Surface):
+        screen.blit(self.cash_text, (750, 10))
+
+    def update(self, screen: pygame.Surface):
+        self.points *= 4
+        self.cash_text = self.cash_font.render(f'{self.points}', True, (0, 0, 0))
+
 
 class Money:
     def __init__(self):
