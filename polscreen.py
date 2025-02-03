@@ -241,6 +241,20 @@ def winorloss(screen):
     reset = pygame.rect.Rect(320, 250, 150, 150)
     changelevel = pygame.rect.Rect(520, 250, 150, 150)
 
+    sprite_reset = pygame.sprite.Sprite()
+    sprite_reset.image = pygame.image.load('image/retry.png')
+    sprite_reset.image = pygame.transform.scale(sprite_reset.image, (150, 150))
+    sprite_reset.rect = reset
+    all_sprites_reset = pygame.sprite.GroupSingle()
+    all_sprites_reset.add(sprite_reset)
+
+    sprite_changelevel = pygame.sprite.Sprite()
+    sprite_changelevel.image = pygame.image.load('image/levelicon.png')
+    sprite_changelevel.image = pygame.transform.scale(sprite_changelevel.image, (150, 150))
+    sprite_changelevel.rect = changelevel
+    all_sprites_changelevel = pygame.sprite.GroupSingle()
+    all_sprites_changelevel.add(sprite_changelevel)
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -255,6 +269,6 @@ def winorloss(screen):
 
         screen.fill(pygame.Color(156, 110, 174))
         screen.blit(text_surface, text_rect)
-        pygame.draw.rect(screen, pygame.color.Color((156, 130, 174)), reset)
-        pygame.draw.rect(screen, pygame.color.Color((156, 130, 174)), changelevel)
+        all_sprites_reset.draw(screen)
+        all_sprites_changelevel.draw(screen)
         pygame.display.flip()
