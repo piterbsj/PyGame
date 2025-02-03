@@ -12,6 +12,8 @@ from models.interface import Obstacles
 LEVEL = 1
 LOSE = False
 
+pygame.init()
+
 def game(screen):
     global LOSE
 
@@ -22,7 +24,7 @@ def game(screen):
     points_zone = Points()
     boxes = Obstacles(LEVEL)
     zlo = Snail(LEVEL)
-    pony = Pony('ponyy.png', (0, 0))
+    pony = Pony()
     move = Background('backgroundnew.jpg', (0, 0))
 
     running = True
@@ -44,6 +46,8 @@ def game(screen):
                     pony.jump()
                 if event.key == pygame.K_TAB:
                     return 4
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pony.change_image()
 
         for im in boxes.newcoord:
             if pony.pony_hitbox.colliderect(im[1]):
@@ -60,6 +64,8 @@ def game(screen):
         timer += clock.tick()
 
         pony.update()
+
+
         #zlo.update1()
 
         screen.fill((0, 191, 216))

@@ -1,7 +1,8 @@
 import pygame
+
 from models.persons.mainpers import Pony
 
-pony = Pony('ponyy.png', (0, 0))
+pony = Pony()
 
 class Snail:                   #улитки
     SPEED = 50
@@ -16,7 +17,6 @@ class Snail:                   #улитки
         sp = self.levels[n]
         for i in sp:
             self.zlo_hitbox = pygame.rect.Rect(i, 400, 65, 65)
-
             self.x, self.y = 0, 0
             self.all_sprites_evil = pygame.sprite.Group()
             sprite_evil = pygame.sprite.Sprite()
