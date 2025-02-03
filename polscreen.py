@@ -87,26 +87,11 @@ def startwindow(screen, numlevel=1):
     changelevel = pygame.rect.Rect(450, 300, 100, 100)
     exit = pygame.rect.Rect(600, 300, 100, 100)
 
-    sprite_play = pygame.sprite.Sprite()
-    sprite_play.image = pygame.image.load('image/starticon.png')
-    sprite_play.image = pygame.transform.scale(sprite_play.image, (100, 100))
-    sprite_play.rect = startgame
-    all_sprites_play = pygame.sprite.GroupSingle()
-    all_sprites_play.add(sprite_play)
+    rects = [startgame, changelevel, exit]
+    pics = ['image/starticon.png', 'image/levelicon.png', 'image/exiticon.png']
+    sizes = [(100, 100), (100, 100), (100, 100)]
 
-    sprite_ch = pygame.sprite.Sprite()
-    sprite_ch.image = pygame.image.load('image/levelicon.png')
-    sprite_ch.image = pygame.transform.scale(sprite_ch.image, (100, 100))
-    sprite_ch.rect = changelevel
-    all_sprites_ch = pygame.sprite.GroupSingle()
-    all_sprites_ch.add(sprite_ch)
-
-    sprite_e = pygame.sprite.Sprite()
-    sprite_e.image = pygame.image.load('image/exiticon.png')
-    sprite_e.image = pygame.transform.scale(sprite_e.image, (100, 100))
-    sprite_e.rect = exit
-    all_sprites_e = pygame.sprite.GroupSingle()
-    all_sprites_e.add(sprite_e)
+    all_sprites_group = allsprites(pics, rects, sizes)
 
     font_size, font_pushs = 54, 25
     sp = [350, 410]
@@ -148,9 +133,7 @@ def startwindow(screen, numlevel=1):
         screen.blit(push_surface2, push_rect2)
         screen.blit(push_surface3, push_rect3)
 
-        all_sprites_play.draw(screen)
-        all_sprites_ch.draw(screen)
-        all_sprites_e.draw(screen)
+        all_sprites_group.draw(screen)
 
         pygame.display.flip()
 
@@ -167,26 +150,11 @@ def changelevelwindow(screen, numlevel=1):
     leveltwo = pygame.rect.Rect(280, 120, 150, 150)
     exitmenu = pygame.rect.Rect(10, 10, 70, 70)
 
-    sprite_levelone = pygame.sprite.Sprite()
-    sprite_levelone.image = pygame.image.load('image/level1.png')
-    sprite_levelone.image = pygame.transform.scale(sprite_levelone.image, (150, 150))
-    sprite_levelone.rect = levelone
-    all_sprites_levelone = pygame.sprite.GroupSingle()
-    all_sprites_levelone.add(sprite_levelone)
+    rects = [levelone, leveltwo, exitmenu]
+    pics = ['image/level1.png', 'image/level2.png', 'image/exit2.png']
+    sizes = [(150, 150), (150, 150), (70, 70)]
 
-    sprite_leveltwo = pygame.sprite.Sprite()
-    sprite_leveltwo.image = pygame.image.load('image/level2.png')
-    sprite_leveltwo.image = pygame.transform.scale(sprite_leveltwo.image, (150, 150))
-    sprite_leveltwo.rect = leveltwo
-    all_sprites_leveltwo = pygame.sprite.GroupSingle()
-    all_sprites_leveltwo.add(sprite_leveltwo)
-
-    sprite_exitmenu = pygame.sprite.Sprite()
-    sprite_exitmenu.image = pygame.image.load('image/exit2.png')
-    sprite_exitmenu.image = pygame.transform.scale(sprite_exitmenu.image, (70, 70))
-    sprite_exitmenu.rect = exitmenu
-    all_sprites_exitmenu = pygame.sprite.GroupSingle()
-    all_sprites_exitmenu.add(sprite_exitmenu)
+    all_sprites_group = allsprites(pics, rects, sizes)
 
     running = True
 
@@ -209,9 +177,11 @@ def changelevelwindow(screen, numlevel=1):
         screen.fill(pygame.Color(156, 110, 174))
         screen.blit(text_surface, text_rect)
 
-        all_sprites_levelone.draw(screen)
-        all_sprites_leveltwo.draw(screen)
-        all_sprites_exitmenu.draw(screen)
+        # all_sprites_levelone.draw(screen)
+        # all_sprites_leveltwo.draw(screen)
+        # all_sprites_exitmenu.draw(screen)
+
+        all_sprites_group.draw(screen)
         pygame.display.flip()
 
 def stopwindow(screen, numlevel=1):
@@ -241,19 +211,11 @@ def winorloss(screen):
     reset = pygame.rect.Rect(320, 250, 150, 150)
     changelevel = pygame.rect.Rect(520, 250, 150, 150)
 
-    sprite_reset = pygame.sprite.Sprite()
-    sprite_reset.image = pygame.image.load('image/retry.png')
-    sprite_reset.image = pygame.transform.scale(sprite_reset.image, (150, 150))
-    sprite_reset.rect = reset
-    all_sprites_reset = pygame.sprite.GroupSingle()
-    all_sprites_reset.add(sprite_reset)
+    rects = [reset, changelevel]
+    pics = ['image/retry.png', 'image/levelicon.png']
+    sizes = [(150, 150), (150, 150)]
 
-    sprite_changelevel = pygame.sprite.Sprite()
-    sprite_changelevel.image = pygame.image.load('image/levelicon.png')
-    sprite_changelevel.image = pygame.transform.scale(sprite_changelevel.image, (150, 150))
-    sprite_changelevel.rect = changelevel
-    all_sprites_changelevel = pygame.sprite.GroupSingle()
-    all_sprites_changelevel.add(sprite_changelevel)
+    group_all_sprites = allsprites(pics, rects, sizes)
 
     running = True
     while running:
@@ -269,6 +231,16 @@ def winorloss(screen):
 
         screen.fill(pygame.Color(156, 110, 174))
         screen.blit(text_surface, text_rect)
-        all_sprites_reset.draw(screen)
-        all_sprites_changelevel.draw(screen)
+        group_all_sprites.draw(screen)
         pygame.display.flip()
+
+
+def allsprites(pics, rects, sizes):                #создание групп спрайтов для каждого окна
+    all_sprites_group = pygame.sprite.Group()
+    for pic in range(len(pics)):
+        sprite1 = pygame.sprite.Sprite()
+        sprite1.image = pygame.image.load(pics[pic])
+        sprite1.image = pygame.transform.scale(sprite1.image, sizes[pic])
+        sprite1.rect = rects[pic]
+        all_sprites_group.add(sprite1)
+    return all_sprites_group
