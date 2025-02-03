@@ -24,7 +24,7 @@ def game(screen):
     money_zone = Money()
     points_zone = Points()
     boxes = Obstacles(LEVEL)
-    zlo = Snail(LEVEL)
+    enemy = Snail(LEVEL)
     pony = Pony()
     move = Background('backgroundnew.jpg', (0, 0))
 
@@ -58,7 +58,7 @@ def game(screen):
                     pony.velocity_y = 6
                     pony.update()
 
-        for  i in zlo.spawn:
+        for  i in enemy.spawn:
             flag = sprite.groupcollide(pony.all_sprites, i[0], True, False)
             if not flag == {}:
                 LOSE = True
@@ -73,7 +73,7 @@ def game(screen):
         pony.update()
 
 
-        #zlo.update1()
+        #enemy.update1()
 
         screen.fill((0, 191, 216))
 
@@ -85,8 +85,8 @@ def game(screen):
         points_zone.update(screen, keys)
         POINTS = points_zone.points
         boxes.draw(screen)
-        zlo.draw(screen)
-        zlo.move(screen)
+        enemy.draw(screen)
+        enemy.move(screen, keys)
         ground.draw_gr(screen)
         pony.draw(screen)
         level_zone.text(screen)
