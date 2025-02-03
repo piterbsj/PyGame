@@ -47,19 +47,25 @@ def game(screen):
                 if event.key == pygame.K_TAB:
                     return 4
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pony.change_image()
+                pony.image = pony.image_pony
+                pony.update()
 
-        for im in boxes.newcoord:
+        for im in boxes.newcoord[1::]:
             if pony.pony_hitbox.colliderect(im[1]):
                 if pony.velocity_y > 0:  # Проверка, движется ли игрок вниз
                     pony.pony_hitbox.bottom = im[1].top
-                    pony.velocity_y = 0
+                    pony.velocity_y = 6
+                    pony.update()
 
         for  i in zlo.spawn:
             flag = sprite.groupcollide(pony.all_sprites, i[0], True, False)
             if not flag == {}:
                 LOSE = True
                 print('убило')
+
+        for  i in boxes.newcoord:
+            if pygame.Rect.colliderect(pony.pony_hitbox, i[1]):
+                print("помогите")
 
         timer += clock.tick()
 
@@ -71,8 +77,8 @@ def game(screen):
         screen.fill((0, 191, 216))
 
         keys = pygame.key.get_pressed()
-        background_zone.draw_bc(screen)
         background_zone.move(keys)
+        background_zone.draw_bc(screen)
         boxes.moveall(keys)
 
         boxes.draw(screen)

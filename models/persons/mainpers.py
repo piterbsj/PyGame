@@ -3,14 +3,15 @@ import os.path
 import pygame
 #from PyQt6.QtWidgets.QWidget import window
 from pygame import *
+from pygame import Rect
+
 from models.methods import load_image
 from models.interface import Obstacles
 
-
 pygame.init()
 
-class Pony(pygame.sprite.Sprite):             #главный персонаж
-    obs = Obstacles()
+class Pony(pygame.sprite.Sprite):   #главный персонаж
+
     image = load_image("image/ponyy.png")
     image_pony = load_image("image/obd.jpg")
 
@@ -57,8 +58,8 @@ class Pony(pygame.sprite.Sprite):             #главный персонаж
                 self.pony_hitbox.y = self.heig - self.pony_hitbox.height
                 self.is_jumping = False
 
-        if not pygame.sprite.collide_mask(self, self.obs.mask):
-            self.image = Pony.image_pony
+        #if pygame.sprite.collide_rect(self, obs.mask):
+            #pass
 
     def change_image(self):
         self.image = Pony.image_pony
