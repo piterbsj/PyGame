@@ -8,6 +8,8 @@ from pygame import Rect
 from models.methods import load_image
 from models.interface import Obstacles
 
+obs = Obstacles()
+
 pygame.init()
 
 class Pony(pygame.sprite.Sprite):   #главный персонаж
@@ -61,12 +63,7 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
 
 
     def change_image(self):
-        self.image = Pony.image_pony
-
-        #if self.pony_hitbox.x == из файла кортеж and self.pony_hitbox.y == кортеж блока:
-
-
-
+        pass
 
 
     def draw(self, screen: pygame.Surface,  is_show_hitbox=True):   #отрисовка спрайта

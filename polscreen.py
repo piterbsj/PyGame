@@ -37,6 +37,9 @@ def game(screen):
 
 
     while running:
+        pygame.mixer.music.load('image/пробная.mp3')
+        pygame.mixer.music.set_volume(100)
+        pygame.mixer.music.play(-1)
         if LOSE:
             # current_time = pygame.time.get_ticks()
             # if current_time - start_time >= 2000:
