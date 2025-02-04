@@ -35,11 +35,11 @@ def game(screen):
     isJumping = False
     clock = pygame.time.Clock()
 
+    pygame.mixer.music.load('music/music_for_game.mp3')
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(-1)
 
     while running:
-        pygame.mixer.music.load('image/пробная.mp3')
-        pygame.mixer.music.set_volume(100)
-        pygame.mixer.music.play(-1)
         if LOSE:
             # current_time = pygame.time.get_ticks()
             # if current_time - start_time >= 2000:
@@ -47,6 +47,7 @@ def game(screen):
         elif background_zone.win:
             background_zone.win = False
             return 5
+
         start_time = pygame.time.get_ticks()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
