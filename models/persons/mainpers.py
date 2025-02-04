@@ -13,7 +13,7 @@ pygame.init()
 class Pony(pygame.sprite.Sprite):   #главный персонаж
 
     image = load_image("image/ponyy.png")
-    image_pony = load_image("image/obd.jpg")
+    image_pony = load_image("image/retry.png")
 
     def __init__(self, *groups):
         super().__init__(*groups)
@@ -28,17 +28,14 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
 
         self.x, self.y = 0, 0    #добавление спрайта
         self.all_sprites = pygame.sprite.Group()
-        sprite = pygame.sprite.Sprite()
+        self.sprite = pygame.sprite.Sprite()
         self.image = Pony.image
-        sprite.image = pygame.transform.scale(self.image, (80, 80))
-        self.mask = pygame.mask.from_surface(sprite.image)
-        sprite.rect = self.pony_hitbox
-        self.mask = pygame.mask.from_surface(sprite.image)
+        self.sprite.image = pygame.transform.scale(self.image, (80, 80))
+        self.mask = pygame.mask.from_surface(self.sprite.image)
+        self.sprite.rect = self.pony_hitbox
+        self.mask = pygame.mask.from_surface(self.sprite.image)
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(sprite)
-
-
-
+        self.all_sprites.add(self.sprite)
 
     def jump(self):                             #прыжок
         if not self.is_jumping:
@@ -49,7 +46,7 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
     def under(self):
         pass
 
-    def update(self, *args):                           #обновление пощиции
+    def update(self, enemies):                           #обновление пощиции
         if self.is_jumping:
             self.pony_hitbox.y += self.velocity_y
             self.velocity_y += self.gravity
@@ -58,8 +55,10 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
                 self.pony_hitbox.y = self.heig - self.pony_hitbox.height
                 self.is_jumping = False
 
-        #if pygame.sprite.collide_rect(self, obs.mask):
-            #pass
+        collided_enemy = pygame.sprite.spritecollideany(self.sprite, enemies.all_sprites_evil)
+        if collided_enemy != None:
+            self.sprite.image = Pony.image_pony
+
 
     def change_image(self):
         self.image = Pony.image_pony

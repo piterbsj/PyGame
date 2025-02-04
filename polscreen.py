@@ -29,18 +29,22 @@ def game(screen):
     enemy = Snail(LEVEL)
     pony = Pony()
     move = Background('backgroundnew.jpg', (0, 0))
+    start_time = 0
 
     running = True
     isJumping = False
     clock = pygame.time.Clock()
-    timer = clock.tick()
+
+
     while running:
         if LOSE:
+            # current_time = pygame.time.get_ticks()
+            # if current_time - start_time >= 2000:
             return 5
         elif background_zone.win:
             background_zone.win = False
             return 5
-
+        start_time = pygame.time.get_ticks()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -55,29 +59,27 @@ def game(screen):
                     return 4
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pony.image = pony.image_pony
-                pony.update()
+                pony.update(enemy)
 
         for im in boxes.newcoord[1::]:
             if pony.pony_hitbox.colliderect(im[1]):
                 if pony.velocity_y > 0:  # Проверка, движется ли игрок вниз
                     pony.pony_hitbox.bottom = im[1].top
                     pony.velocity_y = 6
-                    pony.update()
+                    pony.update(enemy)
 
-        for  i in enemy.spawn:
-            flag = sprite.groupcollide(pony.all_sprites, i[0], True, False)
+        for i in enemy.spawn:
+            flag = sprite.groupcollide(pony.all_sprites, enemy.all_sprites_evil, True, False)
             if not flag == {}:
                 LOSE = True
+                start_time = pygame.time.get_ticks()
                 print('убило')
 
         for  i in boxes.newcoord:
             if pygame.Rect.colliderect(pony.pony_hitbox, i[1]):
                 print("помогите")
 
-        timer += clock.tick()
-
-        pony.update()
-
+        pony.update(enemy)
 
         #enemy.update1()
 
