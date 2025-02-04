@@ -39,10 +39,11 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
         self.all_sprites = pygame.sprite.Group()
         self.all_sprites.add(self.sprite)
 
-    def jump(self):                             #прыжок
-        if not self.is_jumping:
-            self.velocity_y = self.jump_strength
-            self.is_jumping = True
+    def jump(self, screen: pygame.Surface, keys):    #прыжок
+        if keys[pygame.K_SPACE]:
+            if not self.is_jumping:
+                self.velocity_y = self.jump_strength
+                self.is_jumping = True
 
     def under(self):
         pass

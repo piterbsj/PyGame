@@ -36,13 +36,13 @@ def game(screen):
     clock = pygame.time.Clock()
 
     pygame.mixer.music.load('music/music_for_game.mp3')
-    pygame.mixer.music.set_volume(0)
+    pygame.mixer.music.set_volume(0.1)
     pygame.mixer.music.play(-1)
 
     while running:
         if LOSE:
-            # current_time = pygame.time.get_ticks()
-            # if current_time - start_time >= 2000:
+            pony.update(enemy)
+            pygame.time.delay(300)
             return 5
         elif background_zone.win:
             background_zone.win = False
@@ -53,8 +53,8 @@ def game(screen):
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and not isJumping:
-                    pony.jump()
+                #if event.key == pygame.K_SPACE and not isJumping:
+                    #pony.jump()
                 if event.key == pygame.K_ESCAPE:
                     if STOPBACK:
                         STOPBACK = False
@@ -66,29 +66,33 @@ def game(screen):
                 pony.update(enemy)
 
         for im in boxes.newcoord[1::]:
-            if pony.pony_hitbox.colliderect(im[1]):
+            if pony.pony_hitbox.colliderect(im[0]):
                 if pony.velocity_y > 0:  # Проверка, движется ли игрок вниз
-                    pony.pony_hitbox.bottom = im[1].top + 15
+                    pony.pony_hitbox.bottom = im[0].top + 15
                     pony.velocity_y = 6
                     pony.is_jumping = False
                     pony.update(enemy)
 
-
-        for i in enemy.spawn:
-            flag = sprite.groupcollide(pony.all_sprites, enemy.all_sprites_evil, True, False)
-            if not flag == {}:
+        for i in enemy.all_sprites_evil:
+            flag = pony.pony_hitbox.colliderect(i)
+            if not flag == False:
                 LOSE = True
                 start_time = pygame.time.get_ticks()
                 print('убило')
 
-        for  i in boxes.newcoord:
-            if not pygame.Rect.colliderect(pony.pony_hitbox, i[1]):
-                pony.is_jumping = True
+        keys = pygame.key.get_pressed()
+
+        for i in boxes.all_sprites_obst:
+            f = pony.pony_hitbox.colliderect(i)
+            if f == True:
+                pony.is_jumping = False
+                pony.jump(screen,keys)
                 print("помогите")
+            if f == False:
+                pony.is_jumping = True
 
         pony.update(enemy)
 
-        #enemy.update1()
 
         screen.fill((0, 191, 216))
         keys = pygame.key.get_pressed()
@@ -103,6 +107,7 @@ def game(screen):
         enemy.move(screen, keys)
         ground.draw_gr(screen)
         pony.draw(screen)
+        pony.jump(screen, keys)
         level_zone.text(screen)
         pygame.display.flip()
         clock.tick(30)
