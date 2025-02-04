@@ -6,7 +6,7 @@ from pygame import *
 from pygame import Rect
 
 from models.methods import load_image
-from models.interface import Obstacles
+from models.obstacles import Obstacles
 
 obs = Obstacles()
 

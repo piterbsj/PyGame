@@ -6,7 +6,7 @@ from models.zone import Background, Level, Money, Points
 from models.persons.mainpers import Pony
 from models.persons.villainpers import Snail
 from models.methods import load_image
-from models.interface import Obstacles
+from models.obstacles import Obstacles
 
 LEVEL = 1
 LOSE = False
@@ -35,32 +35,45 @@ def game(screen):
     isJumping = False
     clock = pygame.time.Clock()
 
-    pygame.mixer.music.load('music/music_for_game.mp3')
-    pygame.mixer.music.set_volume(0.1)
-    pygame.mixer.music.play(-1)
+    all_sound = pygame.mixer.Sound('music/music_for_game.mp3')
+    all_sound.set_volume(0.2)
+    all_sound.play()
+
+    jump_sound = pygame.mixer.Sound('music/jump_sound.wav')
+    jump_sound.set_volume(0.2)
+
+    game_over = pygame.mixer.Sound('music/game_over.wav')
+    game_over.set_volume(0.2)
+
+    win_sound = pygame.mixer.Sound('music/win_sound.wav')
+    win_sound.set_volume(0.2)
 
     while running:
         if LOSE:
+            all_sound.stop()
+            game_over.play()
+            pygame.time.delay(3000)
             pony.update(enemy)
-            pygame.time.delay(300)
             return 5
         elif background_zone.win:
+            all_sound.stop()
+            win_sound.play()
+            pygame.time.delay(7000)
             background_zone.win = False
             return 5
 
-        start_time = pygame.time.get_ticks()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                #if event.key == pygame.K_SPACE and not isJumping:
-                    #pony.jump()
                 if event.key == pygame.K_ESCAPE:
                     if STOPBACK:
                         STOPBACK = False
                     else:
                         STOPBACK = True
                     return 4
+                if event.key == pygame.K_SPACE:
+                    jump_sound.play()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pony.image = pony.image_pony
                 pony.update(enemy)
@@ -68,7 +81,7 @@ def game(screen):
         for im in boxes.newcoord[1::]:
             if pony.pony_hitbox.colliderect(im[0]):
                 if pony.velocity_y > 0:  # Проверка, движется ли игрок вниз
-                    pony.pony_hitbox.bottom = im[0].top + 15
+                    pony.pony_hitbox.bottom = im[0].top + 10
                     pony.velocity_y = 6
                     pony.is_jumping = False
                     pony.update(enemy)
@@ -77,18 +90,17 @@ def game(screen):
             flag = pony.pony_hitbox.colliderect(i)
             if not flag == False:
                 LOSE = True
-                start_time = pygame.time.get_ticks()
                 print('убило')
 
         keys = pygame.key.get_pressed()
 
         for i in boxes.all_sprites_obst:
             f = pony.pony_hitbox.colliderect(i)
-            if f == True:
+            if f:
                 pony.is_jumping = False
                 pony.jump(screen,keys)
                 print("помогите")
-            if f == False:
+            if not f:
                 pony.is_jumping = True
 
         pony.update(enemy)

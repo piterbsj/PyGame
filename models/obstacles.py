@@ -23,8 +23,12 @@ class Obstacles:                #препятствия
 
             self.x, self.y = 0, 0
             sprite_obst = pygame.sprite.Sprite()
-            sprite_obst.image = pygame.image.load('image/obd.jpg')
-            sprite_obst.image = pygame.transform.scale(sprite_obst.image, (50, 50))
+            if obst[4] == 0:
+                sprite_obst.image = pygame.image.load('image/obd.jpg')
+            else:
+                sprite_obst.image = pygame.image.load('image/box1.png')
+
+            sprite_obst.image = pygame.transform.scale(sprite_obst.image, (obst[2], obst[3]))
             self.mask = pygame.mask.from_surface(sprite_obst.image)
             sprite_obst.rect = box_hitbox
             self.all_sprites_obst.add(sprite_obst)
