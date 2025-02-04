@@ -15,7 +15,7 @@ pygame.init()
 class Pony(pygame.sprite.Sprite):   #главный персонаж
 
     image = load_image("image/ponyy.png")
-    image_pony = load_image("image/retry.png")
+    image_pony = load_image("image/dead.png")
 
     def __init__(self, *groups):
         super().__init__(*groups)
@@ -60,6 +60,7 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
         collided_enemy = pygame.sprite.spritecollideany(self.sprite, enemies.all_sprites_evil)
         if collided_enemy != None:
             self.sprite.image = Pony.image_pony
+            self.pony_hitbox.y = 400
 
 
     def change_image(self):
