@@ -11,12 +11,14 @@ from models.interface import Obstacles
 LEVEL = 1
 LOSE = False
 POINTS = 0
+STOPBACK = False
 
 pygame.init()
 
 def game(screen):
     global LOSE
     global POINTS
+    global STOPBACK
 
     background_zone = Background('backgroundnew.jpg',(0, 0))
     ground = Background('ground.jpg',(0, 0))
@@ -45,7 +47,11 @@ def game(screen):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and not isJumping:
                     pony.jump()
-                if event.key == pygame.K_TAB:
+                if event.key == pygame.K_ESCAPE:
+                    if STOPBACK:
+                        STOPBACK = False
+                    else:
+                        STOPBACK = True
                     return 4
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pony.image = pony.image_pony
@@ -76,7 +82,6 @@ def game(screen):
         #enemy.update1()
 
         screen.fill((0, 191, 216))
-
         keys = pygame.key.get_pressed()
         background_zone.move(keys)
         background_zone.draw_bc(screen)
@@ -186,12 +191,21 @@ def changelevelwindow(screen):
         pygame.display.flip()
 
 def stopwindow(screen):
+    global STOPBACK
+
     running = True
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 0
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    STOPBACK = False
+                    return 2
+
+        screen.fill(pygame.Color(156, 110, 174))
+        pygame.display.flip()
 
 def winorloss(screen):
     global LOSE

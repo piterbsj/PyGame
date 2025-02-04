@@ -10,7 +10,7 @@ class Snail:                   #улитки
         self.levels = {1: [1700, 2100, 3200],
                        2: []}
         self.spawn = []
-        self.newrect(1)
+        self.newrect(n)
 
 
     def newrect(self, n):

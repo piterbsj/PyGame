@@ -56,10 +56,11 @@ class Points:
         # self.points_zone_hitbox = pygame.rect.Rect(750, 0, 150, 100)
         self.cash_font = pygame.font.Font(None, 40)
         self.cash_text = self.cash_font.render(f'{self.points}', True, (0, 0, 0))
-
+        self.score = self.cash_font.render('Score:', True, (0, 0, 0))
 
     def text(self, screen: pygame.Surface):
-        screen.blit(self.cash_text, (920, 10))
+        screen.blit(self.score, (900, 10))
+        screen.blit(self.cash_text, (900, 40))
 
     def update(self,  screen: pygame.Surface, keys):
         if keys[pygame.K_RIGHT] or keys[pygame.K_LEFT]:
