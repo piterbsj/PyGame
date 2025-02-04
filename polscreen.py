@@ -36,7 +36,7 @@ def game(screen):
     clock = pygame.time.Clock()
 
     pygame.mixer.music.load('music/music_for_game.mp3')
-    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.set_volume(0)
     pygame.mixer.music.play(-1)
 
     while running:
@@ -68,9 +68,11 @@ def game(screen):
         for im in boxes.newcoord[1::]:
             if pony.pony_hitbox.colliderect(im[1]):
                 if pony.velocity_y > 0:  # Проверка, движется ли игрок вниз
-                    pony.pony_hitbox.bottom = im[1].top
+                    pony.pony_hitbox.bottom = im[1].top + 15
                     pony.velocity_y = 6
+                    pony.is_jumping = False
                     pony.update(enemy)
+
 
         for i in enemy.spawn:
             flag = sprite.groupcollide(pony.all_sprites, enemy.all_sprites_evil, True, False)
@@ -80,7 +82,8 @@ def game(screen):
                 print('убило')
 
         for  i in boxes.newcoord:
-            if pygame.Rect.colliderect(pony.pony_hitbox, i[1]):
+            if not pygame.Rect.colliderect(pony.pony_hitbox, i[1]):
+                pony.is_jumping = True
                 print("помогите")
 
         pony.update(enemy)

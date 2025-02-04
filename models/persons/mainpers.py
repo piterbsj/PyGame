@@ -44,7 +44,6 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
             self.velocity_y = self.jump_strength
             self.is_jumping = True
 
-
     def under(self):
         pass
 
