@@ -1,11 +1,10 @@
 import pygame
-from polscreen import startwindow, game, changelevelwindow, stopwindow, winorloss
+from polscreen import start_window, game, win_or_loss, change_level_window
 
-screen_dict = {1: startwindow,
+screen_dict = {1: start_window,
                2: game,
-               3: changelevelwindow,
-               4: stopwindow,
-               5: winorloss}
+               3: change_level_window,
+               4: win_or_loss}
 
 if __name__ == '__main__':
     pygame.init()

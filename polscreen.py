@@ -1,7 +1,6 @@
 import pygame
 from pygame import*
 
-
 from models.zone import Background, Level, Money, Points
 from models.persons.mainpers import Pony
 from models.persons.villainpers import Snail
@@ -29,10 +28,8 @@ def game(screen):
     enemy = Snail(LEVEL)
     pony = Pony()
     move = Background('backgroundnew.jpg', (0, 0))
-    start_time = 0
 
     running = True
-    isJumping = False
     clock = pygame.time.Clock()
 
     all_sound = pygame.mixer.Sound('music/music_for_game.mp3')
@@ -54,24 +51,20 @@ def game(screen):
             game_over.play()
             pygame.time.delay(3000)
             pony.update(enemy)
-            return 5
+            return 4
         elif background_zone.win:
             all_sound.stop()
             win_sound.play()
             pygame.time.delay(7000)
             background_zone.win = False
-            return 5
+            return 4
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    if STOPBACK:
-                        STOPBACK = False
-                    else:
-                        STOPBACK = True
-                    return 4
+                    stop_window(screen)
                 if event.key == pygame.K_SPACE:
                     jump_sound.play()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -98,7 +91,7 @@ def game(screen):
             f = pony.pony_hitbox.colliderect(i)
             if f:
                 pony.is_jumping = False
-                pony.jump(screen,keys)
+                pony.jump(screen, keys)
                 print("помогите")
             if not f:
                 pony.is_jumping = True
@@ -124,14 +117,14 @@ def game(screen):
         pygame.display.flip()
         clock.tick(30)
 
-def startwindow(screen):
+def start_window(screen):
     clock = pygame.time.Clock()
 
     listoftext = ["Let's play!", 'Play', 'Change level', 'Exit']
     sizes_text = [54, 25, 25, 25]
     coord_text = [(500, 150), (350, 410), (500, 410), (650, 410)]
 
-    listsurfacetext = textforwindow(listoftext, sizes_text, coord_text)
+    listsurfacetext = text_for_window(listoftext, sizes_text, coord_text)
 
     backgroundphoto = pygame.rect.Rect(350, 130, 300, 60)
     backgroundphoto_color = pygame.color.Color((156, 130, 174))
@@ -144,7 +137,7 @@ def startwindow(screen):
     pics = ['image/starticon.png', 'image/levelicon.png', 'image/exiticon.png']
     sizes = [(100, 100), (100, 100), (100, 100)]
 
-    all_sprites_group = allsprites(pics, rects, sizes)
+    all_sprites_group = all_sprites(pics, rects, sizes)
 
     running = True
 
@@ -173,7 +166,7 @@ def startwindow(screen):
 
         pygame.display.flip()
 
-def changelevelwindow(screen):
+def change_level_window(screen):
     global LEVEL
 
     clock = pygame.time.Clock()
@@ -190,7 +183,7 @@ def changelevelwindow(screen):
     pics = ['image/level1.png', 'image/level2.png', 'image/exit2.png']
     sizes = [(150, 150), (150, 150), (70, 70)]
 
-    all_sprites_group = allsprites(pics, rects, sizes)
+    all_sprites_group = all_sprites(pics, rects, sizes)
 
     running = True
 
@@ -209,31 +202,41 @@ def changelevelwindow(screen):
                     LEVEL = 2
                     return 2
 
-        tick = clock.tick()
         screen.fill(pygame.Color(156, 110, 174))
         screen.blit(text_surface, text_rect)
 
         all_sprites_group.draw(screen)
         pygame.display.flip()
 
-def stopwindow(screen):
+def stop_window(screen):
     global STOPBACK
+    print('hell')
+    text = ['Do you want to continue?', 'Continue', 'Retry']
+    sizes = [64, 25, 25]
+    coord = [(100, 100), (500, 500), (100, 100)]
 
-    running = True
+    text_stop = text_for_window(text, sizes, coord)
 
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return 0
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    STOPBACK = False
-                    return 2
+    pygame.draw.rect(screen, pygame.Color(156, 110, 174), pygame.rect.Rect(0, 0, 1000, 600))
+    for i in text_stop:
+        screen.blit(i[0], i[1])
 
-        screen.fill(pygame.Color(156, 110, 174))
-        pygame.display.flip()
+    # running = True
+    #
+    # while running:
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             return 0
+    #         if event.type == pygame.KEYDOWN:
+    #             if event.key == pygame.K_ESCAPE:
+    #                 STOPBACK = False
+    #                 return 2
+    #
+    #     screen.fill(pygame.Color(156, 110, 174))
+    #     pygame.display.flip()
 
-def winorloss(screen):
+
+def win_or_loss(screen):
     global LOSE
     winorloss = {'w': "You've won! The next level?",
                  'l': "You've lost! Anew?"}
@@ -247,7 +250,7 @@ def winorloss(screen):
     sizes_text = [60, 25, 25, 40, 40]
     coord_text = [(500, 200), (390, 400), (600, 400), (50, 20), (50, 50)]
 
-    texts = textforwindow(listoftext, sizes_text, coord_text)
+    texts = text_for_window(listoftext, sizes_text, coord_text)
 
     reset = pygame.rect.Rect(320, 250, 150, 150)
     changelevel = pygame.rect.Rect(520, 250, 150, 150)
@@ -256,7 +259,7 @@ def winorloss(screen):
     pics = ['image/retry.png', 'image/levelicon.png']
     sizes = [(150, 150), (150, 150)]
 
-    group_all_sprites = allsprites(pics, rects, sizes)
+    group_all_sprites = all_sprites(pics, rects, sizes)
 
     running = True
     while running:
@@ -277,17 +280,17 @@ def winorloss(screen):
         pygame.display.flip()
 
 
-def allsprites(pics, rects, sizes):                #создание групп спрайтов для каждого окна
+def all_sprites(pics, rects, sizes):                #создание групп спрайтов для каждого окна
     all_sprites_group = pygame.sprite.Group()
     for pic in range(len(pics)):
-        sprite1 = pygame.sprite.Sprite()
-        sprite1.image = pygame.image.load(pics[pic])
-        sprite1.image = pygame.transform.scale(sprite1.image, sizes[pic])
-        sprite1.rect = rects[pic]
-        all_sprites_group.add(sprite1)
+        every_sprite = pygame.sprite.Sprite()
+        every_sprite.image = pygame.image.load(pics[pic])
+        every_sprite.image = pygame.transform.scale(every_sprite.image, sizes[pic])
+        every_sprite.rect = rects[pic]
+        all_sprites_group.add(every_sprite)
     return all_sprites_group
 
-def textforwindow(text, size, coord):
+def text_for_window(text, size, coord):
     texts = []
     for i in range(len(text)):
         font = pygame.font.Font(None, size[i])
