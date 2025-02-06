@@ -26,7 +26,7 @@ class Obstacles:                #препятствия
             if obst[4] == 0:
                 sprite_obst.image = pygame.image.load('image/obd.jpg')
             else:
-                sprite_obst.image = pygame.image.load('image/box1.png')
+                sprite_obst.image = pygame.image.load('image/box.png')
 
             sprite_obst.image = pygame.transform.scale(sprite_obst.image, (obst[2], obst[3]))
             self.mask = pygame.mask.from_surface(sprite_obst.image)
