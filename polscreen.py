@@ -10,14 +10,12 @@ from models.obstacles import Obstacles
 LEVEL = 1
 LOSE = False
 POINTS = 0
-STOPBACK = False
 
 pygame.init()
 
 def game(screen):
     global LOSE
     global POINTS
-    global STOPBACK
 
     background_zone = Background('backgroundnew.jpg',(0, 0))
     ground = Background('ground.jpg',(0, 0))
@@ -209,32 +207,23 @@ def change_level_window(screen):
         pygame.display.flip()
 
 def stop_window(screen):
-    global STOPBACK
-    print('hell')
-    text = ['Do you want to continue?', 'Continue', 'Retry']
-    sizes = [64, 25, 25]
-    coord = [(100, 100), (500, 500), (100, 100)]
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return
 
-    text_stop = text_for_window(text, sizes, coord)
+        screen.fill(pygame.Color(156, 110, 174))
 
-    pygame.draw.rect(screen, pygame.Color(156, 110, 174), pygame.rect.Rect(0, 0, 1000, 600))
-    for i in text_stop:
-        screen.blit(i[0], i[1])
+        font = pygame.font.Font(None, 74)
+        text = font.render('PAUSE', True, pygame.Color('black'))
+        text_rect = text.get_rect(center=(500, 200))
+        screen.blit(text, text_rect)
 
-    # running = True
-    #
-    # while running:
-    #     for event in pygame.event.get():
-    #         if event.type == pygame.QUIT:
-    #             return 0
-    #         if event.type == pygame.KEYDOWN:
-    #             if event.key == pygame.K_ESCAPE:
-    #                 STOPBACK = False
-    #                 return 2
-    #
-    #     screen.fill(pygame.Color(156, 110, 174))
-    #     pygame.display.flip()
-
+        pygame.display.flip()
 
 def win_or_loss(screen):
     global LOSE
