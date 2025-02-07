@@ -38,6 +38,7 @@ class Obstacles:                #препятствия
     def draw(self, screen: pygame.Surface):
         self.all_sprites_obst.draw(screen)
 
+
     def moveall(self, keys):
         if keys[pygame.K_RIGHT]:
             for i in self.newcoord:
