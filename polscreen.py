@@ -6,6 +6,7 @@ from models.persons.mainpers import Pony
 from models.persons.villainpers import Snail
 from models.methods import load_image
 from models.obstacles import Obstacles
+from models.zone import Money
 
 LEVEL = 1
 LOSE = False
@@ -20,7 +21,7 @@ def game(screen):
     background_zone = Background('backgroundnew.jpg',(0, 0))
     ground = Background('ground.jpg',(0, 0))
     level_zone = Level(str(LEVEL))
-    money_zone = Money()
+    money = Money()
     points_zone = Points()
     boxes = Obstacles(LEVEL)
     enemy = Snail(LEVEL)
@@ -31,7 +32,7 @@ def game(screen):
     clock = pygame.time.Clock()
 
     all_sound = pygame.mixer.Sound('music/music_for_game.mp3')
-    all_sound.set_volume(0.2)
+    all_sound.set_volume(0)
     all_sound.play()
 
     jump_sound = pygame.mixer.Sound('music/jump_sound.wav')
@@ -77,6 +78,11 @@ def game(screen):
                     pony.is_jumping = False
                     pony.update(enemy)
 
+        for i in money.newcoord:
+            flag = sprite.groupcollide(i[3], pony.all_sprites,True,False)
+            if not flag == {}:
+                print('я богат')
+
         for i in enemy.all_sprites_evil:
             flag = pony.pony_hitbox.colliderect(i)
             if not flag == False:
@@ -102,10 +108,12 @@ def game(screen):
         background_zone.move(keys)
         background_zone.draw_bc(screen)
         boxes.moveall(keys)
+        money.moveall(keys)
         points_zone.text(screen)
         points_zone.update(screen, keys)
         POINTS = points_zone.points
         boxes.draw(screen)
+        money.draw(screen)
         enemy.draw(screen)
         enemy.move(screen, keys)
         ground.draw_gr(screen)
