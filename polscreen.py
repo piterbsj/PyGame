@@ -7,6 +7,7 @@ from models.persons.villainpers import Snail
 from models.methods import load_image
 from models.obstacles import Obstacles
 from models.zone import Money
+from animation.salut import Animation
 
 LEVEL = 1
 LOSE = False
@@ -17,6 +18,7 @@ pygame.init()
 def game(screen):
     global LOSE
     global POINTS
+    c = 0
 
     background_zone = Background('backgroundnew.jpg',(0, 0))
     ground = Background('ground.jpg',(0, 0))
@@ -27,12 +29,14 @@ def game(screen):
     enemy = Snail(LEVEL)
     pony = Pony()
     move = Background('backgroundnew.jpg', (0, 0))
+    x = 20
+    animation = Animation(6, 5, 24, x, "animation/Firework.png", (500, 200))
 
     running = True
     clock = pygame.time.Clock()
 
     all_sound = pygame.mixer.Sound('music/music_for_game.mp3')
-    all_sound.set_volume(0)
+    all_sound.set_volume(0.2)
     all_sound.play()
 
     jump_sound = pygame.mixer.Sound('music/jump_sound.wav')
@@ -54,7 +58,12 @@ def game(screen):
         elif background_zone.win:
             all_sound.stop()
             win_sound.play()
-            pygame.time.delay(7000)
+            while c < 100:
+                animation.update(screen)
+                pygame.display.update()
+                animation.timer.tick(animation.fps)
+                time.delay(10)
+                c += 1
             background_zone.win = False
             return 4
 
@@ -70,7 +79,7 @@ def game(screen):
                 pony.image = pony.image_pony
                 pony.update(enemy)
 
-        for im in boxes.newcoord[1::]:
+        for im in boxes.newcoord:
             if pony.pony_hitbox.colliderect(im[0]):
                 if pony.velocity_y > 0:  # Проверка, движется ли игрок вниз
                     pony.pony_hitbox.bottom = im[0].top + 10
@@ -119,7 +128,6 @@ def game(screen):
         ground.draw_gr(screen)
         pony.draw(screen)
         pony.jump(screen, keys)
-        level_zone.text(screen)
         pygame.display.flip()
         clock.tick(30)
 

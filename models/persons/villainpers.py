@@ -7,8 +7,8 @@ pony = Pony()
 class Snail:                   #улитки
     SPEED = 50
     def __init__(self, n=1):
-        self.levels = {1: [1700, 2100, 3200, 1800, 1900],
-                       2: []}
+        self.levels = {1: [1700, 2720, 3200, 4362, 1900],
+                       2: [700, 1120, 1792, 2867]}
         self.spawn = []
         self.newrect(n)
 

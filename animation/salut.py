@@ -1,43 +1,39 @@
 import sys
-
 import pygame
 from pygame.constants import QUIT, K_ESCAPE, KEYDOWN
-
 from models.methods import load_image
 
+class Animation:
+    def __init__(self, w1, h1, k, fps, image_path, position):
+        self.animation_frames = []
+        self.timer = pygame.time.Clock()
+        self.image = load_image(image_path)
 
-def my_animation(w1, h1, k, fps, name, position):
-    animation_frames = []
-    timer = pygame.time.Clock()
-    image = load_image("Firework.png")
+        self.width, self.height = self.image.get_size()
+        self.w, self.h = self.width / w1, self.height / h1
 
-    sprite = pygame.image.load("Firework.png".format(name)).convert_alpha()
+        row = 0
+        for j in range(int(self.height / self.h)):
+            for i in range(int(self.width / self.w)):
+                self.animation_frames.append(self.image.subsurface(pygame.Rect(i * self.w, row, self.w, self.h)))
+            row += int(self.h)
 
-    width, height = sprite.get_size()
-    w, h = width / w1, height / h1
+        self.counter = 0
+        self.k = k
+        self.fps = fps
+        self.position = position
 
-    row = 0
+    def update(self, screen: pygame.Surface):
+        screen.blit(self.animation_frames[self.counter], self.position)
+        self.counter = (self.counter + 1) % self.k
 
-    for j in range(int(height / h)):
-        for i in range(int(width / w)):
-            animation_frames.append(image.subsurface(pygame.Rect(i * w, row, w, h)))
-        row += int(h)
+    def run(self, screen: pygame.Surface):
+        while True:
+            for evt in pygame.event.get():
+                if evt.type == QUIT or (evt.type == KEYDOWN and evt.key == K_ESCAPE):
+                    sys.exit()
 
-    counter = 0
+            self.update(screen)
 
-    while True:
-        for evt in pygame.event.get():
-            if evt.type == QUIT or (evt.type == KEYDOWN and evt.key == K_ESCAPE):
-                sys.exit()
-
-        scr.blit(animation_frames[counter], position) #отрисовка на экран надо добавить как-то
-
-        counter = (counter + 1) % k
-
-        pygame.display.update()
-        timer.tick(fps)
-
-
-if __name__ == "__main__":
-    x = 20
-    my_animation(6, 5, 24, x, "Firework.png", (300, 300))
+            pygame.display.update()
+            self.timer.tick(self.fps)
