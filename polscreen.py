@@ -91,7 +91,7 @@ def game(screen):
 
         keys = pygame.key.get_pressed()
 
-        for i in boxes.all_sprites_obst:
+        for i in boxes.all_sprites_boxes:
             f = pony.pony_hitbox.colliderect(i)
             if f:
                 pony.is_jumping = False
