@@ -101,10 +101,6 @@ class Money:
             for i in self.newcoord:
                 i[1] -= (Money.SPEED * 150) / 1000
                 i[0].x = i[1]
-        if keys[pygame.K_LEFT]:
-            for i in self.newcoord:
-                i[1] += (Money.SPEED * 150) / 1000
-                i[0].x = i[1]
 
 class MoneyCounter:
     def __init__(self, window, counter=0):
