@@ -34,11 +34,11 @@ class Background:
 
 
     def move(self, keys):
-        if -3950 <= self.x:
+        if -3950 < self.x:
             if keys[pygame.K_RIGHT]:
                 self.x -= (Background.SPEED * 150) / 1000
                 self.background_zone_hitbox.x = self.x
-        if self.x == -3950:
+        else:
             self.win = True
 
     def draw_bc(self, screen: pygame.Surface):
