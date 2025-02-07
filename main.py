@@ -1,7 +1,6 @@
 import pygame
 
-import polscreen
-from polscreen import start_window, game, win_or_loss, change_level_window, Animation
+from polscreen import start_window, game, win_or_loss, change_level_window
 
 screen_dict = {1: start_window,
                2: game,

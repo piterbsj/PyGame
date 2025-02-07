@@ -32,15 +32,13 @@ class Background:
         self.all_sprites = pygame.sprite.GroupSingle()
         self.all_sprites_gr.add(sprite_gr)
 
+
     def move(self, keys):
-        if self.x >= -3950:
+        if -3950 <= self.x:
             if keys[pygame.K_RIGHT]:
                 self.x -= (Background.SPEED * 150) / 1000
                 self.background_zone_hitbox.x = self.x
-            if keys[pygame.K_LEFT]:
-                self.x += (Background.SPEED * 150) / 1000
-                self.background_zone_hitbox.x = self.x
-        else:
+        if self.x == -3950:
             self.win = True
 
     def draw_bc(self, screen: pygame.Surface):
@@ -53,7 +51,6 @@ class Background:
 class Points:
     def __init__(self):
         self.points = 0
-        # self.points_zone_hitbox = pygame.rect.Rect(750, 0, 150, 100)
         self.cash_font = pygame.font.Font(None, 40)
         self.cash_text = self.cash_font.render(f'{self.points}', True, (0, 0, 0))
         self.score = self.cash_font.render('Score:', True, (0, 0, 0))
@@ -63,7 +60,7 @@ class Points:
         screen.blit(self.cash_text, (900, 40))
 
     def update(self,  screen: pygame.Surface, keys):
-        if keys[pygame.K_RIGHT] or keys[pygame.K_LEFT]:
+        if keys[pygame.K_RIGHT] and self.points <= 9998:
             self.points += 4
             self.cash_text = self.cash_font.render(f'{self.points}', True, (0, 0, 0))
 
@@ -109,17 +106,45 @@ class Money:
                 i[1] += (Money.SPEED * 150) / 1000
                 i[0].x = i[1]
 
+class MoneyCounter:
+    def __init__(self, window, counter=0):
+        self.dict_windows = {'game': [760, 10, 800, 13],
+                             'final': [910, 10, 950, 13]}
+
+        self.window_v = window                             #окно из которого вызвался класс
+        self.money_counter = counter
+        self.coin_font = pygame.font.Font(None, 40)
+        self.coin_text = self.coin_font.render(f'- {self.money_counter}', True, (0, 0, 0))
+
+
+        money_rect = pygame.rect.Rect(self.dict_windows[window][0], self.dict_windows[window][1], 32, 32)
+        self.money_sprites = pygame.sprite.GroupSingle()
+        self.x, self.y = 0, 0
+        sprite_m = pygame.sprite.Sprite()
+        sprite_m.image = pygame.image.load('image/coin.png')
+
+        sprite_m.image = pygame.transform.scale(sprite_m.image, (30, 30))
+        self.mask = pygame.mask.from_surface(sprite_m.image)
+        sprite_m.rect = money_rect
+        self.money_sprites.add(sprite_m)
+
+    def text(self, screen: pygame.Surface):
+        screen.blit(self.coin_text, (self.dict_windows[self.window_v][2], self.dict_windows[self.window_v][3]))
+
+    def draw(self, screen: pygame.Surface):
+        self.money_sprites.draw(screen)
+
+    def update(self,  screen: pygame.Surface):
+        self.money_counter += 10
+        self.coin_text = self.coin_font.render(f'- {self.money_counter}', True, (0, 0, 0))
+
 class Level:
     def __init__(self, number):
         self.level_zone_hitbox = pygame.rect.Rect(800, 0, 200, 100)
-        self.level_zone_color = pygame.color.Color((102, 255, 0))
 
         self.cash_font = pygame.font.Font(None, 40)
         self.cash_text = self.cash_font.render(f'Level {number}', True, (0, 0, 0))
 
-
     def text(self, screen: pygame.Surface):
         screen.blit(self.cash_text, (10, 10))
 
-    def draw(self, screen: pygame.Surface):
-        pygame.draw.rect(screen, self.level_zone_color, self.level_zone_hitbox, width=2)

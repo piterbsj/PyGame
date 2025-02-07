@@ -36,10 +36,6 @@ class Snail:                   #улитки
             for info in self.spawn:
                 info[1] -= (Snail.SPEED * 170) / 1000
                 info[0].x = info[1]
-        elif keys[pygame.K_LEFT]:
-            for info in self.spawn:
-                info[1] -= (Snail.SPEED * 80) / 1000
-                info[0].x = info[1]
         else:
             for info in self.spawn:
                 info[1] -= (Snail.SPEED * 120) / 1000

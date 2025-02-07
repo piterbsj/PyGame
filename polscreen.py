@@ -6,12 +6,13 @@ from models.persons.mainpers import Pony
 from models.persons.villainpers import Snail
 from models.methods import load_image
 from models.obstacles import Obstacles
-from models.zone import Money
+from models.zone import Money, MoneyCounter
 from animation.salut import Animation
 
 LEVEL = 1
 LOSE = False
 POINTS = 0
+COINS = 0
 
 pygame.init()
 
@@ -24,11 +25,11 @@ def game(screen):
     ground = Background('ground.jpg',(0, 0))
     level_zone = Level(str(LEVEL))
     money = Money()
+    money_zone = MoneyCounter('game')
     points_zone = Points()
     boxes = Obstacles(LEVEL)
     enemy = Snail(LEVEL)
     pony = Pony()
-    move = Background('backgroundnew.jpg', (0, 0))
     x = 20
     animation = Animation(6, 5, 24, x, "animation/Firework.png", (500, 200))
 
@@ -90,7 +91,7 @@ def game(screen):
         for i in money.newcoord:
             flag = sprite.groupcollide(i[3], pony.all_sprites,True,False)
             if not flag == {}:
-                print('я богат')
+                money_zone.update(screen)
 
         for i in enemy.all_sprites_evil:
             flag = pony.pony_hitbox.colliderect(i)
@@ -121,13 +122,17 @@ def game(screen):
         points_zone.text(screen)
         points_zone.update(screen, keys)
         POINTS = points_zone.points
+        COINS = money_zone.money_counter
         boxes.draw(screen)
+        money_zone.draw(screen)
+        money_zone.text(screen)
         money.draw(screen)
         enemy.draw(screen)
         enemy.move(screen, keys)
         ground.draw_gr(screen)
         pony.draw(screen)
         pony.jump(screen, keys)
+        level_zone.text(screen)
         pygame.display.flip()
         clock.tick(30)
 
@@ -251,6 +256,8 @@ def win_or_loss(screen):
     else:
         result = 'w'
 
+    money_zone = MoneyCounter('final', COINS)
+
     listoftext = [winorloss[result], 'Retry', 'Change level', 'Score:', str(POINTS)]
     sizes_text = [60, 25, 25, 40, 40]
     coord_text = [(500, 200), (390, 400), (600, 400), (50, 20), (50, 50)]
@@ -282,6 +289,8 @@ def win_or_loss(screen):
         for i in texts:
             screen.blit(i[0], i[1])
         group_all_sprites.draw(screen)
+        money_zone.draw(screen)
+        money_zone.text(screen)
         pygame.display.flip()
 
 
