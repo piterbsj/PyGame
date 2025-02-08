@@ -65,7 +65,7 @@ class Points:
             self.cash_text = self.cash_font.render(f'{self.points}', True, (0, 0, 0))
 
 
-class Money:
+class Money:                                              #спавн монеток
     SPEED = 50
 
     def __init__(self):
@@ -111,7 +111,6 @@ class MoneyCounter:
         self.money_counter = counter
         self.coin_font = pygame.font.Font(None, 40)
         self.coin_text = self.coin_font.render(f'- {self.money_counter}', True, (0, 0, 0))
-
 
         money_rect = pygame.rect.Rect(self.dict_windows[window][0], self.dict_windows[window][1], 32, 32)
         self.money_sprites = pygame.sprite.GroupSingle()

@@ -1,7 +1,6 @@
 import os.path
 
 import pygame
-#from PyQt6.QtWidgets.QWidget import window
 from pygame import *
 from pygame import Rect
 
@@ -45,9 +44,6 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
                 self.velocity_y = self.jump_strength
                 self.is_jumping = True
 
-    def under(self):
-        pass
-
     def update(self, enemies):                           #обновление пощиции
         if self.is_jumping:
             self.pony_hitbox.y += self.velocity_y
@@ -61,11 +57,6 @@ class Pony(pygame.sprite.Sprite):   #главный персонаж
         if collided_enemy != None:
             self.sprite.image = Pony.image_pony
             self.pony_hitbox.y = 405
-
-
-    def change_image(self):
-        pass
-
 
     def draw(self, screen: pygame.Surface,  is_show_hitbox=True):   #отрисовка спрайта
         if is_show_hitbox:

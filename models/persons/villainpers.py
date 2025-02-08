@@ -4,7 +4,7 @@ from models.persons.mainpers import Pony
 
 pony = Pony()
 
-class Snail:                   #улитки
+class Snail:                   #враги
     SPEED = 50
     def __init__(self, n=1):
         self.levels = {1: [1700, 2720, 3200, 4362, 1900],

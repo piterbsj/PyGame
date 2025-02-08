@@ -7,7 +7,7 @@ from models.persons.villainpers import Snail
 from models.methods import load_image
 from models.obstacles import Obstacles
 from models.zone import Money, MoneyCounter
-from animation.salut import Animation
+from animation.firework import Animation
 
 LEVEL = 1
 LOSE = False
@@ -19,7 +19,9 @@ pygame.init()
 def game(screen):
     global LOSE
     global POINTS
-    c = 0
+    global COINS
+
+    counter_for_animation = 0
 
     background_zone = Background('backgroundnew.jpg',(0, 0))
     ground = Background('ground.jpg',(0, 0))
@@ -30,7 +32,7 @@ def game(screen):
     boxes = Obstacles(LEVEL)
     enemy = Snail(LEVEL)
     pony = Pony()
-    x = 20
+    x = 20                                  #частота кадров анимации
     animation = Animation(6, 5, 24, x, "animation/Firework.png", (500, 200))
 
     running = True
@@ -59,12 +61,12 @@ def game(screen):
         elif background_zone.win:
             all_sound.stop()
             win_sound.play()
-            while c < 100:
+            while counter_for_animation < 100:
                 animation.update(screen)
                 pygame.display.update()
                 animation.timer.tick(animation.fps)
                 time.delay(10)
-                c += 1
+                counter_for_animation += 1
             background_zone.win = False
             return 4
 
@@ -97,16 +99,14 @@ def game(screen):
             flag = pony.pony_hitbox.colliderect(i)
             if not flag == False:
                 LOSE = True
-                print('убило')
 
         keys = pygame.key.get_pressed()
 
         for i in boxes.all_sprites_boxes:
-            f = pony.pony_hitbox.colliderect(i)
+            f = pony.pony_hitbox.colliderect(i)                 #флаг для проверки коллайда
             if f:
                 pony.is_jumping = False
                 pony.jump(screen, keys)
-                print("помогите")
             if not f:
                 pony.is_jumping = True
 
@@ -139,20 +139,20 @@ def game(screen):
 def start_window(screen):
     clock = pygame.time.Clock()
 
-    listoftext = ["Let's play!", 'Play', 'Change level', 'Exit']
+    list_of_text = ["Let's play!", 'Play', 'Change level', 'Exit']
     sizes_text = [54, 25, 25, 25]
     coord_text = [(500, 150), (350, 410), (500, 410), (650, 410)]
 
-    listsurfacetext = text_for_window(listoftext, sizes_text, coord_text)
+    list_surface_text = text_for_window(list_of_text, sizes_text, coord_text)
 
     backgroundphoto = pygame.rect.Rect(350, 130, 300, 60)
     backgroundphoto_color = pygame.color.Color((156, 130, 174))
 
-    startgame = pygame.rect.Rect(300, 300, 100, 100)
-    changelevel = pygame.rect.Rect(450, 300, 100, 100)
-    exit = pygame.rect.Rect(600, 300, 100, 100)
+    start_game = pygame.rect.Rect(300, 300, 100, 100)
+    change_level = pygame.rect.Rect(450, 300, 100, 100)
+    exit_from_game = pygame.rect.Rect(600, 300, 100, 100)
 
-    rects = [startgame, changelevel, exit]
+    rects = [start_game, change_level, exit_from_game]
     pics = ['image/starticon.png', 'image/levelicon.png', 'image/exiticon.png']
     sizes = [(100, 100), (100, 100), (100, 100)]
 
@@ -179,7 +179,7 @@ def start_window(screen):
         count = 0
         pygame.draw.rect(screen, backgroundphoto_color, backgroundphoto)
 
-        for i in listsurfacetext:
+        for i in list_surface_text:
             screen.blit(i[0], i[1])
         all_sprites_group.draw(screen)
 
@@ -188,17 +188,16 @@ def start_window(screen):
 def change_level_window(screen):
     global LEVEL
 
-    clock = pygame.time.Clock()
     font_size = 54
     font = pygame.font.Font(None, font_size)
     text_surface = font.render('Which level will you choose?', True, pygame.Color('black'))
     text_rect = text_surface.get_rect(center=(380, 50))
 
-    levelone = pygame.rect.Rect(100, 120, 150, 150)
-    leveltwo = pygame.rect.Rect(280, 120, 150, 150)
-    exitmenu = pygame.rect.Rect(10, 10, 70, 70)
+    level_one = pygame.rect.Rect(100, 120, 150, 150)
+    level_two = pygame.rect.Rect(280, 120, 150, 150)
+    exit_menu = pygame.rect.Rect(10, 10, 70, 70)
 
-    rects = [levelone, leveltwo, exitmenu]
+    rects = [level_one, level_two, exit_menu]
     pics = ['image/level1.png', 'image/level2.png', 'image/exit2.png']
     sizes = [(150, 150), (150, 150), (70, 70)]
 
@@ -227,7 +226,7 @@ def change_level_window(screen):
         all_sprites_group.draw(screen)
         pygame.display.flip()
 
-def stop_window(screen):
+def stop_window(screen):                                                #пауза
     running = True
     while running:
         for event in pygame.event.get():
@@ -258,16 +257,16 @@ def win_or_loss(screen):
 
     money_zone = MoneyCounter('final', COINS)
 
-    listoftext = [winorloss[result], 'Retry', 'Change level', 'Score:', str(POINTS)]
+    list_of_text = [winorloss[result], 'Retry', 'Change level', 'Score:', str(POINTS)]
     sizes_text = [60, 25, 25, 40, 40]
     coord_text = [(500, 200), (390, 400), (600, 400), (50, 20), (50, 50)]
 
-    texts = text_for_window(listoftext, sizes_text, coord_text)
+    texts = text_for_window(list_of_text, sizes_text, coord_text)
 
     reset = pygame.rect.Rect(320, 250, 150, 150)
-    changelevel = pygame.rect.Rect(520, 250, 150, 150)
+    change_level = pygame.rect.Rect(520, 250, 150, 150)
 
-    rects = [reset, changelevel]
+    rects = [reset, change_level]
     pics = ['image/retry.png', 'image/levelicon.png']
     sizes = [(150, 150), (150, 150)]
 

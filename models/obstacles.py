@@ -17,7 +17,7 @@ class Obstacles:                #препятствия
             with open('level/level_2.txt') as file:
                 self.coord = [list(map(int, i.split(','))) for i in file]
 
-    def newrect(self):
+    def newrect(self):                                                 #создание препятствий
         for obst in self.coord:
             box_hitbox = pygame.rect.Rect(obst[0], obst[1], obst[2], obst[3])
 
