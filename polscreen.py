@@ -247,8 +247,8 @@ def stop_window(screen):                                                #пау�
 
 def win_or_loss(screen):
     global LOSE
-    winorloss = {'w': "Ты молодец!",
-                 'l': "You've lost! Anew?"}
+    winorloss = {'w': ["Ты молодец!", "Иди на общий балкон и скинь оттуда фотографию"],
+                 'l': ["You've lost! Anew?", '']}
     if LOSE:
         LOSE = False
         result = 'l'
@@ -257,7 +257,7 @@ def win_or_loss(screen):
 
     money_zone = MoneyCounter('final', COINS)
 
-    list_of_text = [winorloss[result],'Иди на общий балкон и скинь оттуда фотографию', 'Retry', 'Change level', 'Score:', str(POINTS)]
+    list_of_text = [winorloss[result][0], winorloss[result][1], 'Retry', 'Change level', 'Score:', str(POINTS)]
     sizes_text = [50, 50, 25, 25, 40, 40]
     coord_text = [(500, 180), (500, 230), (390, 400), (600, 400), (50, 20), (50, 50)]
 
