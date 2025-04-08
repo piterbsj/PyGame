@@ -84,7 +84,7 @@ def game(screen):
 
         for im in boxes.newcoord:
             if pony.pony_hitbox.colliderect(im[0]):
-                if pony.velocity_y > 0:  # Проверка, движется ли игрок вниз
+                if pony.velocity_y > 0 and pony.is_jumping == True:  # Проверка, движется ли игрок вниз
                     pony.pony_hitbox.bottom = im[0].top + 10
                     pony.velocity_y = 6
                     pony.is_jumping = False
